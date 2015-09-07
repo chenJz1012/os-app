@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    <http pattern="/" security="none"/>
+    <http pattern="/security/**" security="none"/>
+    <http pattern="/assets/**" security="none"/>
+    <http pattern="/favicon.ico" security="none"/>
+    <http auto-config="true" use-expressions="true" access-denied-page="/security/denied">
+        <!--加载功能相关 -->
+        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+
+        <form-login
+                login-page="${security.login}"
+                authentication-failure-url="${security.login}?error=true"
+                default-target-url="${security.default.target}"/>
+
+        <logout
+                invalidate-session="true"
+                logout-success-url="${security.login}"
+                logout-url="${security.logout}"/>
+
+        <remember-me key="osAppKey"/>
+
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="orangeSideUserService">
+        </authentication-provider>
+    </authentication-manager>
+
+    <!-- 加载用户相关 -->
+    <beans:bean id="orangeSideUserService"
+                class="com.orangeside.authorization.security.OrangeSideUserServiceImpl"/>
+
+
+    <beans:bean id="messageSource"
+                class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename"
+                        value="classpath:/config/properties/messages_zh_CN"/>
+    </beans:bean>
+
+    <beans:bean id="filterSecurityInterceptor"
+                class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <beans:property name="securityMetadataSource" ref="orangeSideSecurityMetadataSource" />
+        <beans:property name="accessDecisionManager"
+                  ref="orangeSideAccessDecisionManager" />
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+    </beans:bean>
+
+    <beans:bean id="orangeSideAccessDecisionManager" class="com.orangeside.authorization.security.OrangeSideAccessDecisionManager"/>
+
+    <beans:bean id="orangeSideSecurityMetadataSource" class="com.orangeside.authorization.security.OrangeSideSecurityMetadataSourceImpl">
+        <beans:constructor-arg ref="securityService"/>
+    </beans:bean>
+
+
+</beans:beans>
