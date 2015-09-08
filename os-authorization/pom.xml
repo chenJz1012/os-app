@@ -12,6 +12,13 @@
     <artifactId>os-authorization</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.orangeside</groupId>
+            <artifactId>os-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.orangeside</groupId>
             <artifactId>os-urf</artifactId>

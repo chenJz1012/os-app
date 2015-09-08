@@ -13,7 +13,7 @@ import java.util.Properties;
  * 创建时间： 2015/9/7
  * 说明：
  */
-public class PropertiesUtils {
+public class PropertiesUtil {
     public static String get(String properties,String key){
         try {
             Resource res = new ClassPathResource(properties);

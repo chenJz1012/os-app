@@ -1,6 +1,6 @@
 package com.orangeside.common.exception;
 
-import com.orangeside.common.utils.PropertiesUtils;
+import com.orangeside.common.utils.PropertiesUtil;
 
 /**
  * 工程：os-app
@@ -14,7 +14,7 @@ public class BusinessException extends RuntimeException {
     private String err = "";
 
     public BusinessException(int errCode) {
-        this.err = PropertiesUtils.get(PROPERTIES, String.valueOf(errCode));
+        this.err = PropertiesUtil.get(PROPERTIES, String.valueOf(errCode));
     }
 
     /**

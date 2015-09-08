@@ -8,16 +8,18 @@
             http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     <http pattern="/" security="none"/>
     <http pattern="/security/**" security="none"/>
+    <http pattern="/error/**" security="none"/>
     <http pattern="/assets/**" security="none"/>
     <http pattern="/favicon.ico" security="none"/>
-    <http auto-config="true" use-expressions="true" access-denied-page="/security/denied">
+    <http auto-config="true" use-expressions="true" access-denied-page="${security.denied}">
         <!--加载功能相关 -->
-        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
 
         <form-login
                 login-page="${security.login}"
                 authentication-failure-url="${security.login}?error=true"
-                default-target-url="${security.default.target}"/>
+                default-target-url="${security.default.target}"
+                authentication-success-handler-ref="osAuthenticationSuccessHandler"/>
 
         <logout
                 invalidate-session="true"
@@ -48,17 +50,24 @@
 
     <beans:bean id="filterSecurityInterceptor"
                 class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
-        <beans:property name="securityMetadataSource" ref="orangeSideSecurityMetadataSource" />
+        <beans:property name="securityMetadataSource" ref="orangeSideSecurityMetadataSource"/>
         <beans:property name="accessDecisionManager"
-                  ref="orangeSideAccessDecisionManager" />
+                        ref="orangeSideAccessDecisionManager"/>
         <beans:property name="authenticationManager" ref="authenticationManager"/>
     </beans:bean>
 
-    <beans:bean id="orangeSideAccessDecisionManager" class="com.orangeside.authorization.security.OrangeSideAccessDecisionManager"/>
+    <beans:bean id="orangeSideAccessDecisionManager"
+                class="com.orangeside.authorization.security.OrangeSideAccessDecisionManager"/>
 
-    <beans:bean id="orangeSideSecurityMetadataSource" class="com.orangeside.authorization.security.OrangeSideSecurityMetadataSourceImpl">
+    <beans:bean id="orangeSideSecurityMetadataSource"
+                class="com.orangeside.authorization.security.OrangeSideSecurityMetadataSourceImpl">
         <beans:constructor-arg ref="securityService"/>
     </beans:bean>
 
+    <!-- 自定义登陆成功handler -->
+    <beans:bean id="osAuthenticationSuccessHandler"
+                class="com.orangeside.authorization.security.OrangeSideSavedRequestAwareAuthenticationSuccessHandler">
+        <beans:property name="securityService" ref="securityService"/>
+    </beans:bean>
 
 </beans:beans>

@@ -12,8 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/error")
 public class ErrorController {
+    private final static String ERROR_403 = "error/403";
     private final static String ERROR_404 = "error/404";
     private final static String ERROR_500 = "error/500";
+
+    @RequestMapping("/pageDenied")
+    public String pageDenied() throws Exception {
+        return ERROR_403;
+    }
 
     @RequestMapping("/pageNotFound")
     public String pageNotFound() throws Exception {

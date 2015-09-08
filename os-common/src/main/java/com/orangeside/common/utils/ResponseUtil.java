@@ -27,13 +27,18 @@ public class ResponseUtil {
     public static void fail(HttpServletResponse response, String message) {
         try {
             Map<String, Object> map = fail(message);
-            ObjectMapper objectMapper = new ObjectMapper();
-            response.setHeader("Content-Type", "application/json;charset=UTF-8");
-            JsonGenerator jsonGenerator = objectMapper.getJsonFactory().createJsonGenerator(response.getOutputStream(),
-                    JsonEncoding.UTF8);
-            objectMapper.writeValue(jsonGenerator, map);
+            writeJson(response, map);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static void writeJson(HttpServletResponse response, Object o) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        JsonGenerator jsonGenerator = objectMapper.getJsonFactory().createJsonGenerator(response.getOutputStream(),
+                JsonEncoding.UTF8);
+        objectMapper.writeValue(jsonGenerator, o);
+    }
+
 }

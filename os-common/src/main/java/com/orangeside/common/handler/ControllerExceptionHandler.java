@@ -1,5 +1,6 @@
 package com.orangeside.common.handler;
 
+import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,18 +24,18 @@ public class ControllerExceptionHandler {
     private final static String ERROR_500 = "error/500";
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleAllException(HttpServletResponse response,HttpServletRequest request, Exception e){
+    public ModelAndView handleAllException(HttpServletResponse response, HttpServletRequest request, Exception e) {
         logger.debug("捕获到异常");
-        String head = request.getHeader("X-Requested-With");
-        if (StringUtils.isNotBlank(head) && "XMLHttpRequest".equals(head)) {
+        if (RequestUtil.isAjax(request)) {
             logger.debug("异常来源请求为：{}", "ajax请求");
-            ResponseUtil.fail(response,e.getMessage());
+            ResponseUtil.fail(response, e.getMessage());
         } else {
             logger.debug("异常来源请求为：{}", "传统页面请求");
             ModelAndView modelAndView = new ModelAndView(ERROR_500);
-            modelAndView.addObject("msg",e.getMessage());
+            modelAndView.addObject("msg", e.getMessage());
             return modelAndView;
         }
         return null;
     }
+
 }

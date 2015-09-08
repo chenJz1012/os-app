@@ -94,4 +94,8 @@
         <error-code>404</error-code>
         <location>/error/pageNotFound</location>
     </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/pageDenied</location>
+    </error-page>
 </web-app>

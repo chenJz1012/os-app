@@ -2,9 +2,11 @@ package com.orangeside.authorization.service.impl;
 
 import com.orangeside.authorization.security.SecurityUser;
 import com.orangeside.authorization.service.SecurityService;
+import com.orangeside.urf.model.Role;
 import com.orangeside.urf.model.User;
 import com.orangeside.urf.service.RoleService;
 import com.orangeside.urf.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -67,4 +69,13 @@ public class SecurityServiceImpl implements SecurityService {
         }
         return resourceMap;
     }
+
+    @Override
+    public String getDefaulAction(int roleId) {
+        Role role = roleService.findRoleById(roleId);
+        if(StringUtils.isNotBlank(role.getDefaultAction()))
+            return role.getDefaultAction();
+        return "";
+    }
+
 }

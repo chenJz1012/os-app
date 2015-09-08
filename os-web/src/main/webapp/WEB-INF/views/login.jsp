@@ -81,7 +81,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN LOGIN -->
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
-    <form class="login-form" action="/j_spring_security_check" method="post">
+    <form class="login-form" action="<%=basePath%>/j_spring_security_check" method="post">
         <h3 class="form-title">Sign In</h3>
         <c:if test="${param.error==true}">
             <div class="alert alert-danger display-show">

@@ -15,4 +15,5 @@ import java.util.Map;
 public interface SecurityService {
     SecurityUser loadSecurityUserByLoginName(String loginName);
     Map<String, Collection<ConfigAttribute>> getResourceMap();
+    String getDefaulAction(int roleId);
 }
