@@ -33,10 +33,14 @@
     </http>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="orangeSideUserService">
+        <authentication-provider ref="authenticationProvider">
         </authentication-provider>
     </authentication-manager>
 
+    <beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="orangeSideUserService"/>
+        <beans:property name="hideUserNotFoundExceptions" value="false"/>
+    </beans:bean>
     <!-- 加载用户相关 -->
     <beans:bean id="orangeSideUserService"
                 class="com.orangeside.authorization.security.OrangeSideUserServiceImpl"/>
@@ -49,7 +53,7 @@
     </beans:bean>
 
     <beans:bean id="filterSecurityInterceptor"
-                class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+                class="com.orangeside.authorization.security.OrangeSideSecurityInterceptor">
         <beans:property name="securityMetadataSource" ref="orangeSideSecurityMetadataSource"/>
         <beans:property name="accessDecisionManager"
                         ref="orangeSideAccessDecisionManager"/>
