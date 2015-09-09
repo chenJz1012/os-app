@@ -58,6 +58,22 @@
                 }
             });
         }
+        function ajaxLogout() {
+            $.ajax({
+                type: "GET",
+                url: "<%=basePath%>/logout",
+                dataType: "json",
+                success: function (data) {
+                    if(data.success){
+                        alert(data.message);
+                        window.location.href = data.targetUrl;
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -68,10 +84,11 @@
 <a href="<%=basePath%>/test/normalBusinessError">测试业务异常</a>
 <br>
 <br>
-<input id="j_username" placeholder="用户名" type="input" /><br>
-<input id="j_password" placeholder="密码" type="password" /><br>
-<label><input type="checkbox" id="_spring_security_remember_me" value="true"/>Remember </label><br>
+<input id="j_username" placeholder="用户名" type="input" /><br/>
+<input id="j_password" placeholder="密码" type="password" /><br/>
+<label><input type="checkbox" id="_spring_security_remember_me" value="true"/>Remember </label><br/>
 <a href="javascript:ajaxLogin();">测试ajax登录</a><br/>
-<a href="<%=basePath%>/logout">退出登录</a>
+<a href="<%=basePath%>/logout">退出登录</a><br/>
+<a href="javascript:ajaxLogout();">ajax退出登录</a>
 </body>
 </html>

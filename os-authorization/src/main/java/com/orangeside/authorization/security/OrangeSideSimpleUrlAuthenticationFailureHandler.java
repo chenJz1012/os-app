@@ -52,12 +52,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
                                         AuthenticationException exception) throws IOException, ServletException {
         try {
             if (RequestUtil.isAjax(request)) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("success", false);
-                map.put("message", exception.getMessage());
-                if (defaultFailureUrl != null)
-                    map.put("targetUrl", defaultFailureUrl);
-                ResponseUtil.writeJson(response, map);
+                writeJson(response, exception);
                 saveException(request, exception);
                 return;
             }
@@ -80,6 +75,15 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
             logger.info("登录系统失败;原因:"+exception.getMessage()+";日志类型:{};用户:{};登录IP:{};", LOGIN, "-", RequestUtil.getIpAddress(request));
         }
 
+    }
+
+    private void writeJson(HttpServletResponse response, AuthenticationException exception) throws IOException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", false);
+        map.put("message", exception.getMessage());
+        if (defaultFailureUrl != null)
+            map.put("targetUrl", defaultFailureUrl);
+        ResponseUtil.writeJson(response, map);
     }
 
     /**
