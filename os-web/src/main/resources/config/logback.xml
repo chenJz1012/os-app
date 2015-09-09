@@ -52,6 +52,17 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="db-classic-mysql-pool" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource
+                    class="com.alibaba.druid.pool.DruidDataSource">
+                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <url>jdbc:mysql://localhost:3306/app?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</url>
+                <username>root</username>
+                <password>root</password>
+            </dataSource>
+        </connectionSource>
+    </appender>
 
     <root level="DEBUG">
         <appender-ref ref="stdout"/>
@@ -59,6 +70,11 @@
         <appender-ref ref="errlog"/>
         <appender-ref ref="debuglog"/>
     </root>
+
+    <logger name="com.orangeside" level="INFO">
+        <appender-ref ref="db-classic-mysql-pool"/>
+    </logger>
+
     <logger name="com.ibatis" level="DEBUG"/>
     <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
     <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>

@@ -3,8 +3,8 @@ package com.orangeside.authorization.security;
 import com.orangeside.authorization.service.SecurityService;
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -27,7 +27,7 @@ import java.util.Map;
  * 说明：
  */
 public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private RequestCache requestCache = new HttpSessionRequestCache();
 
@@ -35,36 +35,31 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
 
     private SecurityService securityService;
 
-    public SecurityService getSecurityService() {
-        return securityService;
-    }
-
-    public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
-    }
+    private static final String LOGIN = "登录";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-
-        if (savedRequest == null) {
-            handle(request, response, authentication);
-            return;
+        try {
+            SavedRequest savedRequest = requestCache.getRequest(request, response);
+            if (savedRequest == null) {
+                handle(request, response, authentication);
+                return;
+            }
+            String targetUrlParameter = getTargetUrlParameter();
+            if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
+                requestCache.removeRequest(request, response);
+                handle(request, response, authentication);
+                return;
+            }
+            clearAuthenticationAttributes(request);
+            // Use the DefaultSavedRequest URL
+            String targetUrl = savedRequest.getRedirectUrl();
+            logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
+            decideRedirect(request, response, targetUrl);
+        } finally {
+            logLoginSuccess(authentication, request);
         }
-        String targetUrlParameter = getTargetUrlParameter();
-        if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
-            requestCache.removeRequest(request, response);
-            handle(request, response, authentication);
-            return;
-        }
-
-        clearAuthenticationAttributes(request);
-
-        // Use the DefaultSavedRequest URL
-        String targetUrl = savedRequest.getRedirectUrl();
-        logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
-        decideRedirect(request, response, targetUrl);
     }
 
     public void setRequestCache(RequestCache requestCache) {
@@ -83,7 +78,6 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
-
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
@@ -92,10 +86,21 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         clearAuthenticationAttributes(request);
     }
 
+    private void logLoginSuccess(Authentication authentication, HttpServletRequest request) {
+        String username = "";
+        if (authentication.getPrincipal() instanceof SecurityUser) {
+            username = ((SecurityUser) authentication.getPrincipal()).getUsername();
+        } else {
+            username = authentication.getPrincipal().toString();
+        }
+        logger.info("登录系统成功;日志类型:{};用户:{};登录IP:{};", LOGIN, username, RequestUtil.getIpAddress(request));
+    }
+
     private void decideRedirect(HttpServletRequest request, HttpServletResponse response, String targetUrl) throws IOException {
         if (RequestUtil.isAjax(request)) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("success", true);
+            map.put("message", "login success!");
             map.put("targetUrl", targetUrl);
             ResponseUtil.writeJson(response, map);
         } else {
@@ -113,10 +118,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         if (isAlwaysUseDefaultTargetUrl()) {
             return getDefaultTargetUrl();
         }
-
         // Check for the parameter and use that if available
         String targetUrl = null;
-
         if (getTargetUrlParameter() != null) {
             targetUrl = request.getParameter(getTargetUrlParameter());
 
@@ -126,7 +129,6 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
                 return targetUrl;
             }
         }
-
         if (useReferer && !StringUtils.hasLength(targetUrl)) {
             targetUrl = request.getHeader("Referer");
             logger.debug("Using Referer header: " + targetUrl);
@@ -134,23 +136,30 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         String defaultAction = "";
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
             defaultAction = securityService.getDefaulAction(Integer.valueOf(grantedAuthority.getAuthority()));
-            if(StringUtils.hasText(defaultAction)){
+            if (StringUtils.hasText(defaultAction)) {
                 targetUrl = defaultAction;
+                logger.debug("Using role defaultAction: " + targetUrl);
                 break;
             }
         }
-
         if (!StringUtils.hasText(targetUrl)) {
             targetUrl = getDefaultTargetUrl();
             logger.debug("Using default Url: " + targetUrl);
         }
-
         return targetUrl;
     }
 
     @Override
     public void setUseReferer(boolean useReferer) {
         this.useReferer = useReferer;
+    }
+
+    public SecurityService getSecurityService() {
+        return securityService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     /**
