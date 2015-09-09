@@ -65,6 +65,6 @@
 <br>
 <a href="<%=basePath%>/test/normalBusinessError">测试业务异常</a>
 <br>
-<a href="javascript:ajaxLogin();">测试ajax异常</a>
+<a href="javascript:ajaxLogin();">测试模拟admin的ajax登录</a>
 </body>
 </html>

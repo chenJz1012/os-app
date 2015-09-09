@@ -37,21 +37,24 @@
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <beans:bean id="authenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <beans:property name="userDetailsService" ref="orangeSideUserService"/>
         <beans:property name="hideUserNotFoundExceptions" value="false"/>
     </beans:bean>
+
     <!-- 加载用户相关 -->
     <beans:bean id="orangeSideUserService"
                 class="com.orangeside.authorization.security.OrangeSideUserServiceImpl"/>
 
-
+    <!-- 资源国际化 -->
     <beans:bean id="messageSource"
                 class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <beans:property name="basename"
                         value="classpath:/config/properties/messages_zh_CN"/>
     </beans:bean>
 
+    <!-- 自定义验证成功后处理的拦截器 -->
     <beans:bean id="filterSecurityInterceptor"
                 class="com.orangeside.authorization.security.OrangeSideSecurityInterceptor">
         <beans:property name="securityMetadataSource" ref="orangeSideSecurityMetadataSource"/>

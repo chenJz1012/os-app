@@ -61,7 +61,7 @@ public class OrangeSideAccessDecisionManager implements AccessDecisionManager {
                     }    
                 }    
             }    
-            //没有权限    会跳转到login.jsp页面  
+            //没有权限
             throw new AccessDeniedException("没有权限访问");
         }    
         
