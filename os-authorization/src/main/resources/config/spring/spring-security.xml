@@ -7,37 +7,33 @@
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     <http pattern="/" security="none"/>
-    <http pattern="/security/**" security="none"/>
+    <http pattern="/security/login" security="none"/>
     <http pattern="/error/**" security="none"/>
     <http pattern="/assets/**" security="none"/>
     <http pattern="/favicon.ico" security="none"/>
-    <http auto-config="true" use-expressions="true">
-        <!--加载功能权限相关 -->
+    <http use-expressions="true" entry-point-ref="osAuthenticationEntryPoint">
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" invalid-session-url="${security.login}"/>
+        <!--登录相关 -->
+        <custom-filter before="FORM_LOGIN_FILTER" ref="osLoginFilter" />
+        <!--加载功能相关 -->
         <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
-        <!-- 权限拦截handler -->
-        <access-denied-handler ref="osAccessDeniedHandler"/>
+        <!--session过期相关 -->
+        <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER"/>
 
-        <form-login
-                login-page="${security.login}"
-                authentication-failure-handler-ref="osAuthenticationFailureHandler"
-                authentication-success-handler-ref="osAuthenticationSuccessHandler"/>
-
-        <logout
-                invalidate-session="true"
+        <!--登出相关 -->
+        <logout invalidate-session="true"
                 logout-url="${security.logout}"
                 success-handler-ref="osLogoutSuccessHandler"/>
 
+        <!--权限拦截handler -->
+        <access-denied-handler ref="osAccessDeniedHandler" />
+
         <remember-me key="osAppKey"/>
-
-        <session-management >
-            <concurrency-control max-sessions="1" expired-url="${security.login}" session-registry-alias="sessionReistry"/>
-        </session-management>
-
-        <intercept-url pattern="/**" access="isAuthenticated()"/>
 
     </http>
 
-    <authentication-manager alias="authenticationManager">
+    <authentication-manager erase-credentials="false" alias="authenticationManager">
         <authentication-provider ref="authenticationProvider">
         </authentication-provider>
     </authentication-manager>
@@ -76,6 +72,21 @@
         <beans:constructor-arg ref="securityService"/>
     </beans:bean>
 
+    <!-- 登录相关开始 -->
+    <!-- 入口 -->
+    <beans:bean id="osAuthenticationEntryPoint" class="com.orangeside.authorization.security.OrangeSideLoginUrlAuthenticationEntryPoint">
+        <beans:constructor-arg value="${security.login}"/>
+    </beans:bean>
+    <!-- 登录Filter -->
+    <beans:bean id="osLoginFilter" class=
+            "org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <beans:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationSuccessHandler" ref="osAuthenticationSuccessHandler"/>
+        <beans:property name="authenticationFailureHandler" ref="osAuthenticationFailureHandler"/>
+        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
+    </beans:bean>
+
     <!-- 自定义登录成功handler -->
     <beans:bean id="osAuthenticationSuccessHandler"
                 class="com.orangeside.authorization.security.OrangeSideSavedRequestAwareAuthenticationSuccessHandler">
@@ -87,16 +98,53 @@
                 class="com.orangeside.authorization.security.OrangeSideSimpleUrlAuthenticationFailureHandler">
         <beans:property name="defaultFailureUrl" value="${security.login}?error=true"/>
     </beans:bean>
+
+    <!--记住登录 -->
+    <beans:bean id="rememberMeServices"
+          class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+        <beans:constructor-arg name="key" value="osAppKey"/>
+        <beans:constructor-arg name="userDetailsService" ref="orangeSideUserService"/>
+        <beans:property name="tokenValiditySeconds" value="604800" />
+    </beans:bean>
+
+    <!-- 登录相关结束 -->
+
     <!--自定义退出登录成功handler -->
     <beans:bean id="osLogoutSuccessHandler"
                 class="com.orangeside.authorization.security.OrangeSideLogoutSuccessHandler">
         <beans:property name="defaultTargetUrl" value="${security.login}"/>
     </beans:bean>
+
     <!--自定义权限拦截handler -->
     <beans:bean id="osAccessDeniedHandler"
                 class="com.orangeside.authorization.security.OrangeSideAccessDeniedHandler">
-        <beans:property name="errorPage" value="${security.denied}"/>
+        <beans:property name="errorPage" value="${security.denied}" />
     </beans:bean>
+    <!--session过期相关开始 -->
+    <beans:bean id="concurrencyFilter" class="com.orangeside.authorization.security.OrangeSideConcurrentSessionFilter">
+        <beans:property name="sessionRegistry" ref="sessionRegistry" />
+        <beans:property name="expiredUrl" value="${security.login}" />
+    </beans:bean>
+
+    <beans:bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:ref bean="concurrentSessionControlAuthenticationStrategy"/>
+                <beans:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
+                <beans:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <beans:constructor-arg ref="sessionRegistry"/>
+                </beans:bean>
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+    <beans:bean id="concurrentSessionControlAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+        <beans:property name="maximumSessions" value="1" />
+    </beans:bean>
+
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+    <!--session过期相关结束 -->
 
 
 </beans:beans>

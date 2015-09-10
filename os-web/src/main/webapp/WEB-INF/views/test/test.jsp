@@ -26,7 +26,7 @@
                 dataType: "json",
                 success: function (data) {
                     if(data.success==false){
-                        alert(data.err);
+                        alert(data.message);
                     }
                 },
                 error: function (data) {

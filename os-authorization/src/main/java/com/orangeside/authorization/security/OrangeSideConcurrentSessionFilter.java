@@ -1,5 +1,7 @@
 package com.orangeside.authorization.security;
 
+import com.orangeside.common.utils.RequestUtil;
+import com.orangeside.common.utils.ResponseUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 工程：os-app
@@ -32,7 +36,7 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
 
     private SessionRegistry sessionRegistry;
     private String expiredUrl;
-    private LogoutHandler[] handlers = new LogoutHandler[] {new SecurityContextLogoutHandler()};
+    private LogoutHandler[] handlers = new LogoutHandler[]{new SecurityContextLogoutHandler()};
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     //~ Methods ========================================================================================================
@@ -74,12 +78,15 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
                 if (info.isExpired()) {
                     // Expired - abort processing
                     doLogout(request, response);
-
                     String targetUrl = determineExpiredUrl(request, info);
 
+                    if (RequestUtil.isAjax(request)) {
+                        ResponseUtil.writeJson(response,false,600,"会话已过期，请重新登录!", targetUrl);
+                        return;
+                    }
+                    
                     if (targetUrl != null) {
                         redirectStrategy.sendRedirect(request, response, targetUrl);
-
                         return;
                     } else {
                         response.getWriter().print("This session has been expired (possibly due to multiple concurrent " +
@@ -94,7 +101,6 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
                 }
             }
         }
-
         chain.doFilter(request, response);
     }
 
@@ -134,4 +140,5 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
+
 }

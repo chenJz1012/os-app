@@ -32,7 +32,7 @@ public class ControllerExceptionHandler {
         } else {
             logger.debug("异常来源请求为：{}", "传统页面请求");
             ModelAndView modelAndView = new ModelAndView(ERROR_500);
-            modelAndView.addObject("msg", e.getMessage());
+            modelAndView.addObject("message", e.getMessage());
             return modelAndView;
         }
         return null;

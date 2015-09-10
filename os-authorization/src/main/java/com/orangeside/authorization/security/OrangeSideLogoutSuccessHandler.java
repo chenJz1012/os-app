@@ -26,18 +26,10 @@ public class OrangeSideLogoutSuccessHandler extends AbstractAuthenticationTarget
             return;
         }
         if(RequestUtil.isAjax(request)){
-            writeJson(response,targetUrl);
+            ResponseUtil.writeJson(response,true,null,"登出成功！",targetUrl);
         }else{
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         }
     }
 
-    private void writeJson(HttpServletResponse response, String targetUrl) throws IOException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("success", true);
-        map.put("message", "logout success!");
-        if (targetUrl != null)
-            map.put("targetUrl", targetUrl);
-        ResponseUtil.writeJson(response, map);
-    }
 }

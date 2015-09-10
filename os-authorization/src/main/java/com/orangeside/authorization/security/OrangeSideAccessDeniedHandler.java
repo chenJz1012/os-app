@@ -36,7 +36,7 @@ public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
         if(RequestUtil.isAjax(request)){
-            writeJson(response);
+            ResponseUtil.writeJson(response,false,403,"没有权限访问!",errorPage);
             return;
         }
         if (!response.isCommitted()) {
@@ -71,11 +71,4 @@ public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
         this.errorPage = errorPage;
     }
 
-    private void writeJson(HttpServletResponse response) throws IOException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("success", false);
-        map.put("code", 403);
-        map.put("message", "没有权限访问![403]");
-        ResponseUtil.writeJson(response, map);
-    }
 }

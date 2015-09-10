@@ -20,7 +20,7 @@ public class ResponseUtil {
     public static <T> Map<String, Object> fail(String message) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", false);
-        map.put("err", message);
+        map.put("message", message);
         return map;
     }
 
@@ -39,6 +39,16 @@ public class ResponseUtil {
         JsonGenerator jsonGenerator = objectMapper.getJsonFactory().createJsonGenerator(response.getOutputStream(),
                 JsonEncoding.UTF8);
         objectMapper.writeValue(jsonGenerator, o);
+    }
+    public static void writeJson(HttpServletResponse response, boolean success,Integer code, String message,String targetUrl) throws IOException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", success);
+        if(code!=null)
+            map.put("code", code);
+        map.put("message", message);
+        if (targetUrl != null)
+            map.put("targetUrl", targetUrl);
+        writeJson(response, map);
     }
 
 }
