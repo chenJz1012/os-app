@@ -74,6 +74,21 @@
                 }
             });
         }
+        function testAjax403() {
+            $.ajax({
+                type: "GET",
+                url: "<%=basePath%>/index",
+                dataType: "json",
+                success: function (data) {
+                    if(!data.success){
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -89,6 +104,7 @@
 <label><input type="checkbox" id="_spring_security_remember_me" value="true"/>Remember </label><br/>
 <a href="javascript:ajaxLogin();">测试ajax登录</a><br/>
 <a href="<%=basePath%>/logout">退出登录</a><br/>
-<a href="javascript:ajaxLogout();">ajax退出登录</a>
+<a href="javascript:ajaxLogout();">ajax退出登录</a><br/>
+<a href="javascript:testAjax403();">测试ajax权限拦截</a>
 </body>
 </html>
