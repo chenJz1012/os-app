@@ -89,6 +89,26 @@
                 }
             });
         }
+
+        function getOnlineUser() {
+            $.ajax({
+                type: "GET",
+                url: "<%=basePath%>/security/onlineUser",
+                dataType: "json",
+                success: function (data) {
+                    if(data.length>0){
+                        $("#tbody").html("");
+                        $.each(data,function(i,data){
+                            var tr = $("<tr><td>"+data.principal.username+"</td><td>"+data.sessionId+"</td><td>"+data.lastRequest+"</td></tr>");
+                            $("#tbody").append(tr);
+                        });
+                    }
+                },
+                error: function (data) {
+
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -105,6 +125,20 @@
 <a href="javascript:ajaxLogin();">测试ajax登录</a><br/>
 <a href="<%=basePath%>/logout">退出登录</a><br/>
 <a href="javascript:ajaxLogout();">ajax退出登录</a><br/>
-<a href="javascript:testAjax403();">测试ajax权限拦截</a>
+<a href="javascript:testAjax403();">测试ajax权限拦截</a><br>
+<a href="javascript:getOnlineUser();">获取在线用户</a>
+<br/>
+<table>
+    <thead>
+    <tr>
+        <th>user</th>
+        <th>session</th>
+        <th>lastActive</th>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+
+    </tbody>
+</table>
 </body>
 </html>
