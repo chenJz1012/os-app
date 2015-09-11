@@ -1,6 +1,6 @@
 package com.orangeside.authorization.service;
 
-import com.orangeside.authorization.security.SecurityUser;
+import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import org.springframework.security.access.ConfigAttribute;
 
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.Map;
  * 说明：
  */
 public interface SecurityService {
-    SecurityUser loadSecurityUserByLoginName(String loginName);
+    OrangeSideSecurityUser loadSecurityUserByLoginName(String loginName);
     Map<String, Collection<ConfigAttribute>> getResourceMap();
     String getDefaulAction(int roleId);
 }

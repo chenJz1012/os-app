@@ -17,10 +17,10 @@ public class OrangeSideUserServiceImpl implements UserDetailsService{
     SecurityService securityService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SecurityUser securityUser = securityService.loadSecurityUserByLoginName(username);
-        if(securityUser==null){
+        OrangeSideSecurityUser orangeSideSecurityUser = securityService.loadSecurityUserByLoginName(username);
+        if(orangeSideSecurityUser ==null){
             throw new UsernameNotFoundException("用户名不存在");
         }
-        return securityUser;
+        return orangeSideSecurityUser;
     }
 }

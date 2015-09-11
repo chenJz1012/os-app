@@ -16,7 +16,7 @@
         <!-- session管理-->
         <session-management session-authentication-strategy-ref="sessionAuthenticationStrategy"
                             invalid-session-url="${security.login}"/>
-        <!--登录相关 -->
+        <!--自定义登录filter -->
         <custom-filter position="FORM_LOGIN_FILTER" ref="osLoginFilter"/>
         <!--session过期相关 -->
         <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER"/>
@@ -28,7 +28,7 @@
 
         <!--权限拦截handler -->
         <access-denied-handler ref="osAccessDeniedHandler"/>
-        <!-- 异常处理Filter -->
+        <!--自定义异常处理Filter 清除ajax请求的saveRequest -->
         <custom-filter ref="osExceptionTranslationFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
         <!--加载功能相关 -->
         <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
@@ -155,13 +155,11 @@
     <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
     <!--session过期相关结束 -->
 
-    <!--异常处理Filter -->
+    <!--自定义异常处理Filter 清除ajax请求的saveRequest -->
     <beans:bean id="osExceptionTranslationFilter"
-                class="org.springframework.security.web.access.ExceptionTranslationFilter">
+                class="com.orangeside.authorization.security.OrangeSideExceptionTranslationFilter">
         <beans:constructor-arg name="authenticationEntryPoint" ref="osAuthenticationEntryPoint"/>
-        <beans:constructor-arg name="requestCache" ref="osRequestCache"/>
         <beans:property name="accessDeniedHandler" ref="osAccessDeniedHandler"/>
     </beans:bean>
-    <beans:bean id="osRequestCache" class="com.orangeside.authorization.security.OrangeSideHttpSessionRequestCache"/>
 
 </beans:beans>

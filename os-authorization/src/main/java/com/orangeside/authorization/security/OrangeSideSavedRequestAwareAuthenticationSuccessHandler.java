@@ -88,8 +88,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
 
     private void logLoginSuccess(Authentication authentication, HttpServletRequest request) {
         String username = "";
-        if (authentication.getPrincipal() instanceof SecurityUser) {
-            username = ((SecurityUser) authentication.getPrincipal()).getUsername();
+        if (authentication.getPrincipal() instanceof OrangeSideSecurityUser) {
+            username = ((OrangeSideSecurityUser) authentication.getPrincipal()).getUsername();
         } else {
             username = authentication.getPrincipal().toString();
         }

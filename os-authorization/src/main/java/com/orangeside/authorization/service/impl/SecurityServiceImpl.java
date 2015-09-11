@@ -1,6 +1,6 @@
 package com.orangeside.authorization.service.impl;
 
-import com.orangeside.authorization.security.SecurityUser;
+import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.service.SecurityService;
 import com.orangeside.urf.model.Role;
 import com.orangeside.urf.model.User;
@@ -30,7 +30,7 @@ public class SecurityServiceImpl implements SecurityService {
     RoleService roleService;
 
     @Override
-    public SecurityUser loadSecurityUserByLoginName(String loginName) {
+    public OrangeSideSecurityUser loadSecurityUserByLoginName(String loginName) {
         User user = userService.findUserByLoginName(loginName);
         if (user == null) {
             return null;
@@ -43,8 +43,8 @@ public class SecurityServiceImpl implements SecurityService {
                 userGrantedAuthorities.add(ga);
             }
         }
-        SecurityUser securityUser = new SecurityUser(user, userGrantedAuthorities);
-        return securityUser;
+        OrangeSideSecurityUser orangeSideSecurityUser = new OrangeSideSecurityUser(user, userGrantedAuthorities);
+        return orangeSideSecurityUser;
     }
 
     @Override

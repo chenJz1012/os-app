@@ -84,7 +84,7 @@ License: You must have a valid license purchased only from themeforest(the above
             </p>
             <p>
                 Error infomation:<br/>
-                ${msg}
+                ${message}
                 <br/>
             </p>
         </div>

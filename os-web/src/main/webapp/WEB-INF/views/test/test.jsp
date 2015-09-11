@@ -25,7 +25,7 @@
                 data: {},
                 dataType: "json",
                 success: function (data) {
-                    if(data.success==false){
+                    if (data.success == false) {
                         alert(data.message);
                     }
                 },
@@ -39,18 +39,17 @@
                 type: "Post",
                 url: "<%=basePath%>/j_spring_security_check",
                 data: {
-                    "j_username":$("#j_username").val(),
-                    "j_password":$("#j_password").val(),
-                    "_spring_security_remember_me":$("#_spring_security_remember_me").is(':checked')
+                    "j_username": $("#j_username").val(),
+                    "j_password": $("#j_password").val(),
+                    "_spring_security_remember_me": $("#_spring_security_remember_me").is(':checked')
                 },
                 dataType: "json",
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         alert(data.message);
                         window.location.href = data.targetUrl;
-                    }else{
+                    } else {
                         alert(data.message);
-                        window.location.href = data.targetUrl;
                     }
                 },
                 error: function (data) {
@@ -64,7 +63,7 @@
                 url: "<%=basePath%>/logout",
                 dataType: "json",
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         alert(data.message);
                         window.location.href = data.targetUrl;
                     }
@@ -80,7 +79,7 @@
                 url: "<%=basePath%>/index",
                 dataType: "json",
                 success: function (data) {
-                    if(!data.success){
+                    if (!data.success) {
                         alert(data.message);
                     }
                 },
@@ -96,10 +95,14 @@
                 url: "<%=basePath%>/security/onlineUser",
                 dataType: "json",
                 success: function (data) {
-                    if(data.length>0){
+                    if (data.success == false) {
+                        alert(data.message);
+                        return;
+                    }
+                    if (data.length > 0) {
                         $("#tbody").html("");
-                        $.each(data,function(i,data){
-                            var tr = $("<tr><td>"+data.principal.username+"</td><td>"+data.sessionId+"</td><td>"+data.lastRequest+"</td></tr>");
+                        $.each(data, function (i, data) {
+                            var tr = $("<tr><td>" + data.principal.username + "</td><td>" + data.sessionId + "</td><td>" + data.lastRequest + "</td></tr>");
                             $("#tbody").append(tr);
                         });
                     }
@@ -119,8 +122,8 @@
 <a href="<%=basePath%>/test/normalBusinessError">测试业务异常</a>
 <br>
 <br>
-<input id="j_username" placeholder="用户名" type="input" /><br/>
-<input id="j_password" placeholder="密码" type="password" /><br/>
+<input id="j_username" placeholder="用户名" type="input"/><br/>
+<input id="j_password" placeholder="密码" type="password"/><br/>
 <label><input type="checkbox" id="_spring_security_remember_me" value="true"/>Remember </label><br/>
 <a href="javascript:ajaxLogin();">测试ajax登录</a><br/>
 <a href="<%=basePath%>/logout">退出登录</a><br/>
