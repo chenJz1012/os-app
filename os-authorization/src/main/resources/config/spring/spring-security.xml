@@ -12,12 +12,15 @@
     <http pattern="/assets/**" security="none"/>
     <http pattern="/favicon.ico" security="none"/>
     <http use-expressions="true" entry-point-ref="osAuthenticationEntryPoint">
+        <intercept-url pattern="/security/web/**" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <!-- session管理-->
         <session-management session-authentication-strategy-ref="sessionAuthenticationStrategy"
                             invalid-session-url="${security.login}"/>
+
         <!--自定义登录filter -->
-        <custom-filter position="FORM_LOGIN_FILTER" ref="osLoginFilter"/>
+        <custom-filter ref="osLoginFilter" position="FORM_LOGIN_FILTER"/>
+
         <!--session过期相关 -->
         <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER"/>
 
@@ -28,10 +31,13 @@
 
         <!--权限拦截handler -->
         <access-denied-handler ref="osAccessDeniedHandler"/>
+
         <!--自定义异常处理Filter 清除ajax请求的saveRequest -->
         <custom-filter ref="osExceptionTranslationFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
+
         <!--加载功能相关 -->
         <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+
         <!--记住登录 -->
         <remember-me key="osAppKey"/>
 
@@ -82,6 +88,7 @@
                 class="com.orangeside.authorization.security.OrangeSideLoginUrlAuthenticationEntryPoint">
         <beans:constructor-arg value="${security.login}"/>
     </beans:bean>
+
     <!-- 登录Filter -->
     <beans:bean id="osLoginFilter" class=
             "org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
@@ -98,6 +105,7 @@
         <beans:property name="securityService" ref="securityService"/>
         <beans:property name="defaultTargetUrl" value="${security.default.target}"/>
     </beans:bean>
+
     <!-- 自定义登录失败handler -->
     <beans:bean id="osAuthenticationFailureHandler"
                 class="com.orangeside.authorization.security.OrangeSideSimpleUrlAuthenticationFailureHandler">
@@ -125,6 +133,7 @@
                 class="com.orangeside.authorization.security.OrangeSideAccessDeniedHandler">
         <beans:property name="errorPage" value="${security.denied}"/>
     </beans:bean>
+
     <!--session过期相关开始 -->
     <beans:bean id="concurrencyFilter" class="com.orangeside.authorization.security.OrangeSideConcurrentSessionFilter">
         <beans:property name="sessionRegistry" ref="sessionRegistry"/>

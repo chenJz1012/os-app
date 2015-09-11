@@ -60,7 +60,7 @@
         function ajaxLogout() {
             $.ajax({
                 type: "GET",
-                url: "<%=basePath%>/logout",
+                url: "<%=basePath%>/security/logout",
                 dataType: "json",
                 success: function (data) {
                     if (data.success) {
@@ -92,7 +92,7 @@
         function getOnlineUser() {
             $.ajax({
                 type: "GET",
-                url: "<%=basePath%>/security/onlineUser",
+                url: "<%=basePath%>/security/web/onlineUser",
                 dataType: "json",
                 success: function (data) {
                     if (data.success == false) {
@@ -126,7 +126,7 @@
 <input id="j_password" placeholder="密码" type="password"/><br/>
 <label><input type="checkbox" id="_spring_security_remember_me" value="true"/>Remember </label><br/>
 <a href="javascript:ajaxLogin();">测试ajax登录</a><br/>
-<a href="<%=basePath%>/logout">退出登录</a><br/>
+<a href="<%=basePath%>/security/logout">退出登录</a><br/>
 <a href="javascript:ajaxLogout();">ajax退出登录</a><br/>
 <a href="javascript:testAjax403();">测试ajax权限拦截</a><br>
 <a href="javascript:getOnlineUser();">获取在线用户</a>
