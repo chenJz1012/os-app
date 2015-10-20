@@ -22,6 +22,11 @@ public class TestController {
         return "test/test";
     }
 
+    @RequestMapping("/plugins")
+    public String plugins() throws Exception {
+        return "test/plugins";
+    }
+
     @RequestMapping("/normalError")
     public String normalError() throws Exception {
         throw new Exception("normalError");

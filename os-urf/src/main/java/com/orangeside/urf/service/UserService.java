@@ -13,10 +13,16 @@ import java.util.List;
  */
 public interface UserService {
     int insertUser(User user);
+
     int updateUser(User user);
+
     User findUserById(int id);
+
     User findUserByLoginName(String loginName);
+
     int deleteUser(int id);
-    int insertUserRole(int userId,int roleId);
+
+    int insertUserRole(int userId, int roleId);
+
     List<Integer> findUserRoleByUserId(int userId);
 }

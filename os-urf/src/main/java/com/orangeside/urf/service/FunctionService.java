@@ -10,7 +10,10 @@ import com.orangeside.urf.model.Function;
  */
 public interface FunctionService {
     int insertFunction(Function function);
+
     int updateFunction(Function function);
+
     Function findFuntionById(int id);
+
     int deleteFunctionById(int id);
 }

@@ -9,9 +9,9 @@
 <%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path;
+    String basePath =
+            request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+                    + path;
 %>
 <!DOCTYPE html>
 <!--
@@ -40,29 +40,38 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-   <%-- <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
-          type="text/css"/>--%>
-    <link href="<%=basePath%>/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+    <%-- <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+           type="text/css"/>--%>
+    <link href="<%=basePath%>/assets/global/plugins/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet"
           type="text/css"/>
-    <link href="<%=basePath%>/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"
+    <link href="<%=basePath%>/assets/global/plugins/simple-line-icons/simple-line-icons.min.css"
+          rel="stylesheet"
           type="text/css"/>
-    <link href="<%=basePath%>/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=basePath%>/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=basePath%>/assets/global/plugins/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="<%=basePath%>/assets/global/plugins/uniform/css/uniform.default.css"
+          rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL STYLES -->
     <link href="<%=basePath%>/assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME STYLES -->
-    <link href="<%=basePath%>/assets/global/css/components-rounded.css" id="style_components" rel="stylesheet"
+    <link href="<%=basePath%>/assets/global/css/components-rounded.css" id="style_components"
+          rel="stylesheet"
           type="text/css"/>
     <link href="<%=basePath%>/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
     <link href="<%=basePath%>/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=basePath%>/assets/admin/layout/css/themes/default.css" rel="stylesheet" type="text/css"
+    <link href="<%=basePath%>/assets/admin/layout/css/themes/default.css" rel="stylesheet"
+          type="text/css"
           id="style_color"/>
     <link href="<%=basePath%>/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="<%=basePath%>favicon.ico"/>
+    <script>
+        var os_root = "<%=basePath%>";
+    </script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -94,12 +103,14 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off"
+            <input class="form-control form-control-solid placeholder-no-fix" type="text"
+                   autocomplete="off"
                    placeholder="Username" name="j_username"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Password</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"
+            <input class="form-control form-control-solid placeholder-no-fix" type="password"
+                   autocomplete="off"
                    placeholder="Password" name="j_password"/>
         </div>
         <div class="form-actions">
@@ -112,16 +123,20 @@ License: You must have a valid license purchased only from themeforest(the above
             <h4>Or login with</h4>
             <ul class="social-icons">
                 <li>
-                    <a class="social-icon-color facebook" data-original-title="facebook" href="javascript:;"></a>
+                    <a class="social-icon-color facebook" data-original-title="facebook"
+                       href="javascript:;"></a>
                 </li>
                 <li>
-                    <a class="social-icon-color twitter" data-original-title="Twitter" href="javascript:;"></a>
+                    <a class="social-icon-color twitter" data-original-title="Twitter"
+                       href="javascript:;"></a>
                 </li>
                 <li>
-                    <a class="social-icon-color googleplus" data-original-title="Goole Plus" href="javascript:;"></a>
+                    <a class="social-icon-color googleplus" data-original-title="Goole Plus"
+                       href="javascript:;"></a>
                 </li>
                 <li>
-                    <a class="social-icon-color linkedin" data-original-title="Linkedin" href="javascript:;"></a>
+                    <a class="social-icon-color linkedin" data-original-title="Linkedin"
+                       href="javascript:;"></a>
                 </li>
             </ul>
         </div>
@@ -141,7 +156,8 @@ License: You must have a valid license purchased only from themeforest(the above
         </p>
 
         <div class="form-group">
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email"
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off"
+                   placeholder="Email"
                    name="email"/>
         </div>
         <div class="form-actions">
@@ -160,20 +176,24 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Full Name</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="fullname"/>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name"
+                   name="fullname"/>
         </div>
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">Email</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Email"
+                   name="email"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Address</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Address"
+                   name="address"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">City/Town</label>
-            <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"/>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town"
+                   name="city"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Country</label>
@@ -421,12 +441,14 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username"
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off"
+                   placeholder="Username"
                    name="username"/>
         </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Password</label>
-            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password"
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off"
+                   id="register_password"
                    placeholder="Password" name="password"/>
         </div>
         <div class="form-group">
@@ -447,7 +469,9 @@ License: You must have a valid license purchased only from themeforest(the above
         </div>
         <div class="form-actions">
             <button type="button" id="register-back-btn" class="btn btn-default">Back</button>
-            <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">Submit</button>
+            <button type="submit" id="register-submit-btn"
+                    class="btn btn-success uppercase pull-right">Submit
+            </button>
         </div>
     </form>
     <!-- END REGISTRATION FORM -->
@@ -463,11 +487,16 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<%=basePath%>/assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="<%=basePath%>/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>/assets/global/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/plugins/jquery-migrate.min.js"
+        type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/plugins/bootstrap/js/bootstrap.min.js"
+        type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/plugins/jquery.blockui.min.js"
+        type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/plugins/uniform/jquery.uniform.min.js"
+        type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/plugins/jquery.cookie.min.js"
+        type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="<%=basePath%>/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"

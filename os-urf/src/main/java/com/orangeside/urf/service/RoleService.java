@@ -13,9 +13,14 @@ import java.util.Map;
  */
 public interface RoleService {
     int insertRole(Role role);
+
     int updateRole(Role role);
+
     Role findRoleById(int id);
+
     int deleteRole(int id);
-    int insertRoleFuntion(int roleId,int functionId);
+
+    int insertRoleFuntion(int roleId, int functionId);
+
     List<Map> findRoleMatchupFunctions();
 }

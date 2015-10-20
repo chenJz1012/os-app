@@ -91,7 +91,7 @@
 
     <!-- 登录Filter -->
     <beans:bean id="osLoginFilter" class=
-            "org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+            "com.orangeside.authorization.security.OrangeSideUsernamePasswordAuthenticationFilter">
         <beans:property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy"/>
         <beans:property name="authenticationManager" ref="authenticationManager"/>
         <beans:property name="authenticationSuccessHandler" ref="osAuthenticationSuccessHandler"/>

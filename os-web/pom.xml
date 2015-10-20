@@ -22,6 +22,13 @@
             <artifactId>os-urf</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.orangeside</groupId>
+            <artifactId>os-sample</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- 权限验证模块 开始-->
         <dependency>
             <groupId>com.orangeside</groupId>
