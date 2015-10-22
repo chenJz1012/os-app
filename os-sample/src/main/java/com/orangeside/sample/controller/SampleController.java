@@ -22,6 +22,18 @@ public class SampleController {
         return "modules/os-sample/page";
     }
 
+    @RequestMapping("/normalError")
+    public String normalError() throws Exception {
+        throw new Exception("normalError");
+    }
+
+    @RequestMapping("/ajaxError")
+    public
+    @ResponseBody
+    Object ajaxError() throws Exception {
+        throw new Exception("ajaxError");
+    }
+
     @RequestMapping("/normalBusinessError")
     public String normalBusinessError() throws Exception {
         throw new BusinessException(1001);
