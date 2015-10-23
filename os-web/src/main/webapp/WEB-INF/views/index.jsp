@@ -896,12 +896,35 @@
     seajs.config({
         base: os_root
     });
-    seajs.use([pathjs.path("portlet"), pathjs.path("grid")], function (portlet, grid) {
-        var grid = grid.build({
-            render: "div.page-content > div.container"
+    seajs.use([pathjs.path("element")], function (element) {
+        var row = element.build().row({
+            render: "div.page-content > div.container",
+            id: "row_id"
         });
-        var portlet = portlet.build();
-        grid.$element.append(portlet.$element);
+        var col1 = element.build().col({
+            id: "col_id",
+            span: "6",
+            render: row
+        });
+        var col2 = element.build().col({
+            id: "col2_id",
+            span: "6",
+            render: row
+        });
+        var aaaa = $('<span>aaaaaaa</span>');
+        var portlet = element.build().portlet({
+            id: "portlet_id",
+            title: "我的标题",
+            titleIcon : "fa fa-cogs font-green-sharp",
+            render: col1,
+            item: aaaa
+        });
+        var portlet2 = element.build().portlet({
+            id: "portlet2_id",
+            title: "我的标题2",
+            render: col2,
+            html: "aaaa"
+        });
     });
 </script>
 <script>
