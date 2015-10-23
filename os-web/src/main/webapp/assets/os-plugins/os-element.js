@@ -210,11 +210,11 @@ define("element", function (require, exports, module, undefined) {
         this.element = portletDiv;
         if (this.attributes.scrollable) {
             this.body = portletBody.find(".scroller");
+            Metronic.initSlimScroll(this.body);
         } else {
             this.body = portletBody;
         }
         this.common(this.attributes);
-        Metronic.initSlimScroll(this.body);
         return this;
     };
 
