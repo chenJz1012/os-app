@@ -3,8 +3,7 @@
     "use strict";
     var osPaths = {
         "element": "/assets/os-plugins/os-element",
-        "grid": "/assets/os-plugins/os-grid",
-        "portlet": "/assets/os-plugins/os-portlet"
+        "grid": "/assets/os-plugins/os-grid"
     };
     if (global.pathjs) {
         return

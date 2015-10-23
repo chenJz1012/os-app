@@ -886,9 +886,11 @@
         src="<%=basePath%>/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 <script src="<%=basePath%>/assets/admin/pages/scripts/table-managed.js"></script>
 
+
 <script src="<%=basePath%>/assets/os-plugins/sea.js" type="text/javascript"></script>
 <script src="<%=basePath%>/assets/os-plugins/os-plugins-path.js"
         type="text/javascript"></script>
+
 <script>
     pathjs.config({
         base: os_root
@@ -911,20 +913,36 @@
             span: "6",
             render: row
         });
-        var aaaa = $('<span>aaaaaaa</span>');
+        var alertDiv = element.build().alert({
+            id: "alert_id",
+            type: "success",
+            message: "成功",
+            close: false
+        });
+        var h4 = $('<h4 class="block">Default Alerts</h4>');
+        var button = element.build().button({
+            cls: "green-haze btn-circle",
+            icon: "fa fa-check",
+            text: "我是button",
+            click: function () {
+                alert(0);
+            }
+        });
         var portlet = element.build().portlet({
             id: "portlet_id",
             title: "我的标题",
-            titleIcon : "fa fa-cogs font-green-sharp",
+            titleIcon: "fa fa-cogs font-green-sharp",
             render: col1,
-            item: aaaa
+            titleAction: [button],
+            scrollable: true,
+            fullscreen: true,
+            item: [alertDiv, h4, "aaaaaaaaaaaaa<br/><br/><br/><br/><br/><br/><br/>aaaaa"]
         });
         var portlet2 = element.build().portlet({
             id: "portlet2_id",
             title: "我的标题2",
-            render: col2,
-            html: "aaaa"
-        });
+            render: col2
+        }).alert("warning", "警告", 2000);
     });
 </script>
 <script>
