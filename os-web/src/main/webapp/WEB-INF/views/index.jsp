@@ -925,25 +925,53 @@
             icon: "fa fa-check",
             text: "我是button",
             click: function () {
-                alert(0);
+                portlet.alert("info", "滚动到我这！", 1000, true);
             }
+        });
+        var button2 = element.build().button({
+            cls: "green-haze btn-circle",
+            icon: "fa fa-user",
+            text: "user",
+            iconPosition: "right",
+            click: function () {
+                portlet.alert("info", "滚动到我这！", 1000, true);
+            }
+        });
+        var dropdown = element.build().dropdown({
+            icon: "fa fa-list",
+            text: "下拉",
+            actions: [{
+                text: "滚动提示",
+                click: function () {
+                    portlet.alert("info", "滚动到我这！", 1000, true);
+                }
+            }, {
+                type: "divider"
+            }, {
+                text: "b",
+                click: function () {
+                    alert("b");
+                }
+            }]
         });
         var portlet = element.build().portlet({
             id: "portlet_id",
             title: "我的标题",
             titleIcon: "fa fa-cogs font-green-sharp",
             render: col1,
-            titleAction: [button],
+            titleAction: [button, button2, dropdown],
             scrollable: true,
-            fullscreen: true,
+            scrollHeight: 400,
             item: [alertDiv, h4, "aaaaaaaaaaaaa<br/><br/><br/><br/><br/><br/><br/>aaaaa"]
-        });
+        }).note("warning", "提示", "这是提示示例");
         var portlet2 = element.build().portlet({
             id: "portlet2_id",
             title: "我的标题2",
+            fullscreen: true,
             render: col2
         }).alert("warning", "警告", 2000);
-    });
+    })
+    ;
 </script>
 <script>
     jQuery(document).ready(function () {

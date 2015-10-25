@@ -99,7 +99,7 @@ define("element", function (require, exports, module, undefined) {
         if (that.attributes.scrollable) {
             var scroller = $('<div class="scroller" style="height:200px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">');
             if (that.attributes.scrollHeight != undefined)
-                scroller.css("height", that.attributes.scrollHeigh + "px");
+                scroller.css("height", that.attributes.scrollHeight + "px");
             if (that.attributes.scrollAllwaysVisible)
                 scroller.attr("data-always-visible", "1");
             if (that.attributes.scrollRailColor != undefined)
@@ -118,6 +118,17 @@ define("element", function (require, exports, module, undefined) {
             '<strong>' + (option.message == undefined ? "" : option.message) + '</strong></div>');
         return alert;
     };
+    var initNote = function (option) {
+        var note = $('<div class="note note-' + (option.type == undefined ? "info" : option.type) + '">' +
+            '<h4 class="block">' + (option.title == undefined ? "" : option.title) + '</h4>' +
+            '<p>' + (option.content == undefined ? "" : option.content) + '</p></div>');
+        return note;
+    };
+
+    var initIcon = function (cls) {
+        var icon = $('<i class="' + cls + '"></i>');
+        return icon;
+    }
 
     Element.prototype.common = function (innerOption) {
         var that = this;
@@ -151,26 +162,41 @@ define("element", function (require, exports, module, undefined) {
                 }
                 that.body.append(appendObject);
             }
-
         }
         if (innerOption.html != undefined) {
             that.body.html(innerOption.html);
+            return that;
         }
         this.append = function (ele) {
             that.body.append(ele);
+            return that;
         };
         this.appendTo = function (ele) {
             that.element.appendTo(ele);
+            return that;
         };
-        this.alert = function (type, msg, millions) {
+        this.alert = function (type, msg, millions, scrollTo) {
             var option = {
                 "type": type,
                 "message": msg
             }
             var alert = new initAlert(option);
             that.body.prepend(alert);
-            if (millions != undefined)
+            if (millions != undefined && millions > 0)
                 alert.delay(millions).fadeOut();
+            if (scrollTo)
+                Metronic.scrollTo(alert);
+            return that;
+        }
+        this.note = function (type, title, content) {
+            var option = {
+                "type": type,
+                "title": title,
+                "content": content
+            }
+            var note = new initNote(option);
+            that.body.prepend(note);
+            return that;
         }
     };
 
@@ -228,13 +254,31 @@ define("element", function (require, exports, module, undefined) {
         return this;
     };
 
+    Element.prototype.note = function (innerOption) {
+        this.attributes = innerOption || {};
+        var note = new initNote(this.attributes);
+        this.element = note;
+        this.body = note;
+        setAttribute(this, note);
+        this.common(this.attributes);
+        return this;
+    };
+
     Element.prototype.button = function (innerOption) {
         var that = this;
         this.attributes = innerOption || {};
         var button = $('<button type="button" class="btn">' + (this.attributes.text == undefined ? "按钮" : this.attributes.text) + '</button>');
         if (this.attributes.icon != undefined) {
-            var icon = $('<i class="' + this.attributes.icon + '"></i>');
-            button.prepend(icon);
+            var icon = initIcon(this.attributes.icon);
+            if (this.attributes.iconPosition != undefined) {
+                if ("right" == this.attributes.iconPosition) {
+                    button.append(icon);
+                } else {
+                    button.prepend(icon);
+                }
+            } else {
+                button.prepend(icon);
+            }
         }
         if (this.attributes.click != undefined) {
             button.click(function () {
@@ -244,6 +288,49 @@ define("element", function (require, exports, module, undefined) {
         this.element = button;
         this.body = button;
         setAttribute(this, button);
+        return this;
+    };
+
+    Element.prototype.dropdown = function (innerOption) {
+        this.attributes = innerOption || {};
+        var btnGroup = $('<div class="btn-group"></div>');
+        var a = $('<a class="btn yellow btn-circle" href="javascript:;" data-toggle="dropdown" aria-expanded="true">'
+            + (this.attributes.text == undefined ? "按钮" : this.attributes.text) + '<i class="fa fa-angle-down"></i></a>');
+        if (this.attributes.icon != undefined) {
+            var icon = initIcon(this.attributes.icon);
+            a.prepend(icon);
+        }
+        var dUl = $('<ul class="dropdown-menu pull-right"></ul>');
+        if (this.attributes.actions != undefined) {
+            var actions = this.attributes.actions;
+            if (isArray(actions)) {
+                $.each(actions, function (i, action) {
+                    if (action.type == "divider") {
+                        var li = $('<li class="divider"></li>');
+                        dUl.append(li);
+                    } else {
+                        var li = $('<li><a href="javascript:;">' + (action.text == undefined ? "未定义text" : action.text) + '</a></li>');
+                        if (action.click != undefined) {
+                            li.click(function () {
+                                action.click();
+                            });
+                        }
+                        dUl.append(li);
+                    }
+                });
+            } else {
+                console.error("dropdown的actions必须为数组");
+                return;
+            }
+        } else {
+            console.error("dropdown的actions未定义");
+            return;
+        }
+        btnGroup.append(a);
+        btnGroup.append(dUl);
+        this.element = btnGroup;
+        this.body = btnGroup;
+        setAttribute(this, btnGroup);
         return this;
     };
 
