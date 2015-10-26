@@ -41,7 +41,7 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN THEME STYLES -->
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
-    <link href="<%=basePath%>/assets/global/css/components-rounded.css" id="style_components"
+    <link href="<%=basePath%>/assets/global/css/components.css" id="style_components"
           rel="stylesheet" type="text/css">
     <link href="<%=basePath%>/assets/global/css/plugins.css" rel="stylesheet" type="text/css">
     <link href="<%=basePath%>/assets/admin/layout3/css/layout.css" rel="stylesheet" type="text/css">
@@ -923,18 +923,23 @@
         var button = element.build().button({
             cls: "green-haze btn-circle",
             icon: "fa fa-check",
-            text: "我是button",
+            text: "alertSuccess",
             click: function () {
-                portlet.alert("info", "滚动到我这！", 1000, true);
+                portlet.alert("success", "滚动到我这！", 1000, true);
             }
         });
         var button2 = element.build().button({
             cls: "green-haze btn-circle",
             icon: "fa fa-user",
-            text: "user",
+            loadAfterClick: true,
+            loadText: "等待中...",
+            text: "alertInfo",
             iconPosition: "right",
             click: function () {
                 portlet.alert("info", "滚动到我这！", 1000, true);
+                setTimeout(function () {
+                    button2.reset();
+                }, 2000)
             }
         });
         var dropdown = element.build().dropdown({
@@ -948,9 +953,9 @@
             }, {
                 type: "divider"
             }, {
-                text: "b",
+                text: "portlet加载",
                 click: function () {
-                    alert("b");
+                    portlet.block("加载中");
                 }
             }]
         });
@@ -959,7 +964,15 @@
             title: "我的标题",
             titleIcon: "fa fa-cogs font-green-sharp",
             render: col1,
-            titleAction: [button, button2, dropdown],
+            titleAction: [button, button2, dropdown, element.build().button({
+                cls: "green-haze btn-circle",
+                icon: "fa fa-close",
+                text: "停止加载",
+                iconPosition: "right",
+                click: function () {
+                    portlet.unBlock();
+                }
+            })],
             scrollable: true,
             scrollHeight: 400,
             item: [alertDiv, h4, "aaaaaaaaaaaaa<br/><br/><br/><br/><br/><br/><br/>aaaaa"]

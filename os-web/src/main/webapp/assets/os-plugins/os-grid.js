@@ -12,7 +12,6 @@ define(function (require, exports, module, undefined) {
 
 define("grid", [pathjs.path("element")], function (require, exports, module, undefined) {
     var root = this;
-    var Element = require(pathjs.path("element"));
     root.default = {
         render: "body"
     };

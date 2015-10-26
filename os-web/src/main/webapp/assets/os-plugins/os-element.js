@@ -226,6 +226,7 @@ define("element", function (require, exports, module, undefined) {
     };
 
     Element.prototype.portlet = function (innerOption) {
+        var that = this;
         this.attributes = innerOption || {};
         var portletDiv = initPortletDiv(this);
         var portletTitle = initPortletTitle(this);
@@ -241,6 +242,18 @@ define("element", function (require, exports, module, undefined) {
             this.body = portletBody;
         }
         this.common(this.attributes);
+        this.block = function (message) {
+            Metronic.blockUI({
+                target: that.body,
+                boxed: true,
+                "message": (message == undefined ? '等待中...' : message)
+            });
+            return that;
+        };
+        this.unBlock = function () {
+            Metronic.unblockUI(that.body);
+            return that;
+        };
         return this;
     };
 
@@ -282,11 +295,22 @@ define("element", function (require, exports, module, undefined) {
         }
         if (this.attributes.click != undefined) {
             button.click(function () {
+                if (that.attributes.loadAfterClick) {
+                    var btn = $(this);
+                    btn.attr("data-loading-text", (that.attributes.loadText == undefined ? "loading..." : that.attributes.loadText));
+                    that.load();
+                }
                 that.attributes.click();
             });
         }
         this.element = button;
         this.body = button;
+        this.load = function () {
+            that.element.button('loading');
+        };
+        this.reset = function () {
+            that.element.button('reset');
+        }
         setAttribute(this, button);
         return this;
     };
@@ -333,5 +357,4 @@ define("element", function (require, exports, module, undefined) {
         setAttribute(this, btnGroup);
         return this;
     };
-
 });
