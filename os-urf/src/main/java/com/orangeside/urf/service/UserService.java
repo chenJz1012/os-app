@@ -1,8 +1,9 @@
 package com.orangeside.urf.service;
 
+import com.github.pagehelper.PageInfo;
 import com.orangeside.urf.model.User;
+import com.orangeside.urf.vo.UserVO;
 
-import java.security.Security;
 import java.util.List;
 
 /**
@@ -25,4 +26,6 @@ public interface UserService {
     int insertUserRole(int userId, int roleId);
 
     List<Integer> findUserRoleByUserId(int userId);
+
+    PageInfo<UserVO> findUserList(Integer pageNum, Integer pageSize, User user);
 }

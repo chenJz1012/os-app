@@ -1,12 +1,16 @@
 package com.orangeside.urf.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.orangeside.urf.dao.UserMapper;
 import com.orangeside.urf.model.User;
 import com.orangeside.urf.service.UserService;
+import com.orangeside.urf.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工程：os-app
@@ -52,5 +56,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Integer> findUserRoleByUserId(int userId) {
         return userMapper.findUserRoleByUserId(userId);
+    }
+
+    @Override public PageInfo<UserVO> findUserList(Integer pageNum, Integer pageSize, User user) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserVO> list = userMapper.findUserList(user);
+        PageInfo<UserVO> page = new PageInfo<UserVO>(list);
+        return page;
     }
 }

@@ -205,7 +205,7 @@
                             <li class="divider">
                             </li>
                             <li>
-                                <a href="login.html">
+                                <a href="<%=basePath%>/security/logout">
                                     <i class="icon-key"></i> Log Out </a>
                             </li>
                         </ul>

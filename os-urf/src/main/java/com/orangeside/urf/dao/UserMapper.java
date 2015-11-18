@@ -1,6 +1,7 @@
 package com.orangeside.urf.dao;
 
 import com.orangeside.urf.model.User;
+import com.orangeside.urf.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -59,4 +60,6 @@ public interface UserMapper {
     User findUserByLoginName(@Param("loginName") String loginName);
 
     List<Integer> findUserRoleByUserId(@Param("userId") Integer userId);
+
+    List<UserVO> findUserList(User user);
 }

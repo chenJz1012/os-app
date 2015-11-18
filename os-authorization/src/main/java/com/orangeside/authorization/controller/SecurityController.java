@@ -1,8 +1,9 @@
 package com.orangeside.authorization.controller;
 
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
+import com.orangeside.authorization.utils.SecurityUtils;
+import com.orangeside.urf.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工程：os-app
@@ -18,21 +21,14 @@ import java.util.List;
  * 创建时间： 2015/9/1
  * 说明：
  */
-@Controller
-@RequestMapping("/security")
-public class SecurityController {
-    @Autowired
-    SessionRegistry sessionRegistry;
+@Controller @RequestMapping("/security") public class SecurityController {
+    @Autowired SessionRegistry sessionRegistry;
 
-    @RequestMapping("/login")
-    public String login() {
+    @RequestMapping("/login") public String login() {
         return "login";
     }
 
-    @RequestMapping("/web/onlineUser")
-    public
-    @ResponseBody
-    Object onlineUser() {
+    @RequestMapping("/web/onlineUser") public @ResponseBody Object onlineUser() {
         List<SessionInformation> sessions = new ArrayList<SessionInformation>();
         for (Object o : sessionRegistry.getAllPrincipals()) {
             for (SessionInformation sessionInformation : sessionRegistry.getAllSessions(o, false)) {
@@ -42,21 +38,30 @@ public class SecurityController {
         return sessions;
     }
 
-    @RequestMapping(value = "/web/loginState", produces = "text/html;charset=UTF-8")
-    public
-    @ResponseBody
-    String loginState() {
+    @RequestMapping(value = "/web/loginStateScript", produces = "text/html;charset=UTF-8") public
+    @ResponseBody String loginStateScript() {
         StringBuffer stringBuffer = new StringBuffer();
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof OrangeSideSecurityUser) {
-            username = ((OrangeSideSecurityUser) principal).getUsername();
-            stringBuffer.append("var siLogin = true;");
+        String userName = SecurityUtils.getCurrentUserName();
+        if (userName != null) {
+            stringBuffer.append("var os_siLogin = true;");
+            stringBuffer.append("var os_userName = " + userName + ";");
         } else {
-            username = principal.toString();
-            stringBuffer.append("var siLogin = false;");
+            stringBuffer.append("var os_siLogin = false;");
         }
-        stringBuffer.append("var username = " + username + ";");
         return stringBuffer.toString();
+    }
+
+    @RequestMapping(value = "/web/loginStateJson") public @ResponseBody Object loginStateJson() {
+        Map map = new HashMap();
+        String userName = SecurityUtils.getCurrentUserName();
+        if (userName != null) {
+            map.put("os_isLogin", true);
+            map.put("os_userName", userName);
+            OrangeSideSecurityUser user = SecurityUtils.getCurrentSecurityUser();
+            map.put("os_user", user);
+        } else {
+            map.put("os_isLogin", false);
+        }
+        return map;
     }
 }
