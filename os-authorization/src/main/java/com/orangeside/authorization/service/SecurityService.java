@@ -15,5 +15,5 @@ import java.util.Map;
 public interface SecurityService {
     OrangeSideSecurityUser loadSecurityUserByLoginName(String loginName);
     Map<String, Collection<ConfigAttribute>> getResourceMap();
-    String getDefaulAction(int roleId);
+    String getDefaultAction(int roleId);
 }

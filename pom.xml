@@ -24,7 +24,7 @@
     </developers>
     <properties>
         <!-- spring版本号 -->
-        <spring.version>3.2.5.RELEASE</spring.version>
+        <spring.version>4.0.0.RELEASE</spring.version>
         <!-- security版本号 -->
         <spring.security.version>3.2.8.RELEASE</spring.security.version>
         <!-- mybatis版本号 -->
@@ -148,12 +148,12 @@
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
-                <version>3.5.1</version>
+                <version>4.0.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.jsqlparser</groupId>
                 <artifactId>jsqlparser</artifactId>
-                <version>0.9.1</version>
+                <version>0.9.4</version>
             </dependency>
 
             <!-- log start -->

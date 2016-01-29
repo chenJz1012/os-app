@@ -37,7 +37,7 @@ import org.springframework.web.context.WebApplicationContext;
 
     @Test public void users() throws Exception {
         System.out.println("result:" + mockMvc
-            .perform(get("/adminUser/users").param("pageNum", "0").param("pageSize", "15"))
+            .perform(get("/adminUser/users").param("pageNum", "0").param("pageSize", "1"))
             .andExpect(status().isOk()).andReturn().getResponse().getContentAsString());
     }
 

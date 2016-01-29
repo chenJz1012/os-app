@@ -135,7 +135,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         }
         String defaultAction = "";
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            defaultAction = securityService.getDefaulAction(Integer.valueOf(grantedAuthority.getAuthority()));
+            defaultAction = securityService.getDefaultAction(
+                Integer.valueOf(grantedAuthority.getAuthority()));
             if (StringUtils.hasText(defaultAction)) {
                 targetUrl = defaultAction;
                 logger.debug("Using role defaultAction: " + targetUrl);
