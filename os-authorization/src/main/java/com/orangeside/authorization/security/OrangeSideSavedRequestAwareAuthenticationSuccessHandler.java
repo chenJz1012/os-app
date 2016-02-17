@@ -26,7 +26,8 @@ import java.util.Map;
  * 创建时间： 2015/9/8
  * 说明：
  */
-public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
+    extends SimpleUrlAuthenticationSuccessHandler {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private RequestCache requestCache = new HttpSessionRequestCache();
@@ -39,7 +40,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws ServletException, IOException {
+        Authentication authentication) throws ServletException, IOException {
         try {
             SavedRequest savedRequest = requestCache.getRequest(request, response);
             if (savedRequest == null) {
@@ -47,7 +48,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
                 return;
             }
             String targetUrlParameter = getTargetUrlParameter();
-            if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
+            if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils
+                .hasText(request.getParameter(targetUrlParameter)))) {
                 requestCache.removeRequest(request, response);
                 handle(request, response, authentication);
                 return;
@@ -68,15 +70,15 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
 
     /**
      * Invokes the configured {@code RedirectStrategy} with the URL returned by the {@code determineTargetUrl} method.
-     * <p/>
+     * <p>
      * The redirect will not be performed if the response has already been committed.
      *
      * @param request
      * @param response
      * @param authentication
      */
-    @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    @Override protected void handle(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
@@ -93,10 +95,12 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         } else {
             username = authentication.getPrincipal().toString();
         }
-        logger.info("登录系统成功;日志类型:{};用户:{};登录IP:{};", LOGIN, username, RequestUtil.getIpAddress(request));
+        logger.info("登录系统成功;日志类型:{};用户:{};登录IP:{};", LOGIN, username,
+            RequestUtil.getIpAddress(request));
     }
 
-    private void decideRedirect(HttpServletRequest request, HttpServletResponse response, String targetUrl) throws IOException {
+    private void decideRedirect(HttpServletRequest request, HttpServletResponse response,
+        String targetUrl) throws IOException {
         if (RequestUtil.isAjax(request)) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("success", true);
@@ -114,7 +118,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
      * @param request
      * @param response
      */
-    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) {
         if (isAlwaysUseDefaultTargetUrl()) {
             return getDefaultTargetUrl();
         }
@@ -135,8 +140,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         }
         String defaultAction = "";
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            defaultAction = securityService.getDefaultAction(
-                Integer.valueOf(grantedAuthority.getAuthority()));
+            defaultAction =
+                securityService.getDefaultAction(Integer.valueOf(grantedAuthority.getAuthority()));
             if (StringUtils.hasText(defaultAction)) {
                 targetUrl = defaultAction;
                 logger.debug("Using role defaultAction: " + targetUrl);
@@ -150,8 +155,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler extends Sim
         return targetUrl;
     }
 
-    @Override
-    public void setUseReferer(boolean useReferer) {
+    @Override public void setUseReferer(boolean useReferer) {
         this.useReferer = useReferer;
     }
 

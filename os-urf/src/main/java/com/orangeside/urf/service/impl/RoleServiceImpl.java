@@ -41,12 +41,12 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public int insertRoleFuntion(int roleId, int functionId) {
-        return roleMapper.insertRoleFuntion(roleId,functionId);
+    public int insertRoleFunction(int roleId, int functionId) {
+        return roleMapper.insertRoleFunction(roleId, functionId);
     }
 
     @Override
-    public List<Map> findRoleMatchupFunctions() {
-        return roleMapper.findRoleMatchupFunctions();
+    public List<Map> findRoleMatchUpFunctions() {
+        return roleMapper.findRoleMatchUpFunctions();
     }
 }

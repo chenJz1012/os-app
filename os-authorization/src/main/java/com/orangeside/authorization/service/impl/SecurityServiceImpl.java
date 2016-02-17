@@ -50,7 +50,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public Map<String, Collection<ConfigAttribute>> getResourceMap() {
         Map<String, Collection<ConfigAttribute>> resourceMap = new HashMap<>();
-        List<Map> roleFunctions = roleService.findRoleMatchupFunctions();
+        List<Map> roleFunctions = roleService.findRoleMatchUpFunctions();
         if (roleFunctions != null && roleFunctions.size() > 0) {
             for (Map roleFunction : roleFunctions) {
                 String url = (String) roleFunction.get("function");

@@ -140,11 +140,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <insert id="insertRoleFuntion" parameterType="java.lang.Integer">
+  <insert id="insertRoleFunction" parameterType="java.lang.Integer">
     insert into sys_role_function (role_id,function_id) values(#{roleId,jdbcType=INTEGER},#{functionId,jdbcType=INTEGER});
   </insert>
 
-  <select id="findRoleMatchupFunctions" resultType="java.util.Map" >
+  <select id="findRoleMatchUpFunctions" resultType="java.util.Map" >
     select
     f.action as function,r.id as role
     from  sys_role r

@@ -17,13 +17,6 @@ import java.io.IOException;
  * 说明：
  */
 public class OrangeSideLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
-    /**
-     * Performs the redirect (or forward) to the login form URL.
-     *
-     * @param request
-     * @param response
-     * @param authException
-     */
     public OrangeSideLoginUrlAuthenticationEntryPoint(String loginFormUrl){
         super(loginFormUrl);
     }

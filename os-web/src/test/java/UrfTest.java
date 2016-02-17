@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -61,7 +60,7 @@ public class UrfTest extends AbstractTransactionalJUnit4SpringContextTests {
         logger.info("功能id：===============" + index.getId());
 
         logger.info("插入角色和功能关系：执行结果===============" + roleService
-            .insertRoleFuntion(adminRole.getId(), index.getId()));
+            .insertRoleFunction(adminRole.getId(), index.getId()));
 
         Role role = new Role();
         role.setRoleName("role-sample");
@@ -84,7 +83,7 @@ public class UrfTest extends AbstractTransactionalJUnit4SpringContextTests {
         logger.info("功能id：===============" + test.getId());
 
         logger.info("插入角色和功能关系：执行结果===============" + roleService
-            .insertRoleFuntion(role.getId(), test.getId()));
+            .insertRoleFunction(role.getId(), test.getId()));
     }
 
 

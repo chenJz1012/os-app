@@ -55,7 +55,7 @@ public interface RoleMapper {
      */
     int updateByPrimaryKey(Role record);
 
-    int insertRoleFuntion(@Param("roleId") Integer roleId, @Param("functionId") Integer functionId);
+    int insertRoleFunction(@Param("roleId") Integer roleId, @Param("functionId") Integer functionId);
 
-    List<Map> findRoleMatchupFunctions();
+    List<Map> findRoleMatchUpFunctions();
 }

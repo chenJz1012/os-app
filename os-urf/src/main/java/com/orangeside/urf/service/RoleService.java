@@ -20,7 +20,7 @@ public interface RoleService {
 
     int deleteRole(int id);
 
-    int insertRoleFuntion(int roleId, int functionId);
+    int insertRoleFunction(int roleId, int functionId);
 
-    List<Map> findRoleMatchupFunctions();
+    List<Map> findRoleMatchUpFunctions();
 }
