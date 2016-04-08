@@ -2,10 +2,10 @@ package com.orangeside.authorization.service.impl;
 
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.service.SecurityService;
-import com.orangeside.urf.model.Role;
-import com.orangeside.urf.model.User;
-import com.orangeside.urf.service.RoleService;
-import com.orangeside.urf.service.UserService;
+import com.orangeside.authorization.model.Role;
+import com.orangeside.authorization.model.User;
+import com.orangeside.authorization.service.RoleService;
+import com.orangeside.authorization.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;

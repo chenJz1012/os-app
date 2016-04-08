@@ -1,9 +1,9 @@
 package com.orangeside.authorization.utils;
 
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
-import com.orangeside.urf.model.User;
-import com.orangeside.urf.service.UserService;
-import com.orangeside.urf.service.impl.UserServiceImpl;
+import com.orangeside.authorization.model.User;
+import com.orangeside.authorization.service.UserService;
+import com.orangeside.authorization.service.impl.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.ContextLoader;

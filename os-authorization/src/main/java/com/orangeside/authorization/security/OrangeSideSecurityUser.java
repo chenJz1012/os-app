@@ -13,7 +13,7 @@ import java.util.Collection;
  * 说明：
  */
 public class OrangeSideSecurityUser extends User {
-    public OrangeSideSecurityUser(com.orangeside.urf.model.User user,
+    public OrangeSideSecurityUser(com.orangeside.authorization.model.User user,
         Collection<GrantedAuthority> userGrantedAuthorities) {
         super(user.getLoginName(), user.getPassword(), user.getEnabled(),
             user.getAccountNonExpired(), user.getCredentialsNonExpired(),

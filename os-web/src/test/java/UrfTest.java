@@ -1,9 +1,9 @@
-import com.orangeside.urf.model.Function;
-import com.orangeside.urf.model.Role;
-import com.orangeside.urf.model.User;
-import com.orangeside.urf.service.FunctionService;
-import com.orangeside.urf.service.RoleService;
-import com.orangeside.urf.service.UserService;
+import com.orangeside.authorization.model.Function;
+import com.orangeside.authorization.model.Role;
+import com.orangeside.authorization.model.User;
+import com.orangeside.authorization.service.FunctionService;
+import com.orangeside.authorization.service.RoleService;
+import com.orangeside.authorization.service.UserService;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;

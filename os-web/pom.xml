@@ -17,25 +17,6 @@
             <artifactId>os-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.orangeside</groupId>
-            <artifactId>os-urf</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.orangeside</groupId>
-            <artifactId>os-sample</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.orangeside</groupId>
-            <artifactId>os-admin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- 权限验证模块 开始-->
         <dependency>
             <groupId>com.orangeside</groupId>
@@ -43,6 +24,11 @@
             <version>${project.version}</version>
         </dependency>
         <!-- 权限验证模块 结束-->
+        <dependency>
+            <groupId>com.orangeside</groupId>
+            <artifactId>os-sample</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- springframe start -->
         <dependency>

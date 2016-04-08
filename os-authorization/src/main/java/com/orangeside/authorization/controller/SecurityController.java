@@ -2,7 +2,7 @@ package com.orangeside.authorization.controller;
 
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.utils.SecurityUtils;
-import com.orangeside.urf.model.User;
+import com.orangeside.authorization.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
