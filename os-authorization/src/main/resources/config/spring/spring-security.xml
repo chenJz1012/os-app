@@ -13,6 +13,7 @@
     <http pattern="/favicon.ico" security="none"/>
     <http use-expressions="true" entry-point-ref="osAuthenticationEntryPoint">
         <intercept-url pattern="/security/web/**" access="permitAll"/>
+        <intercept-url pattern="/u/**" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <!-- session管理-->
         <session-management session-authentication-strategy-ref="sessionAuthenticationStrategy"

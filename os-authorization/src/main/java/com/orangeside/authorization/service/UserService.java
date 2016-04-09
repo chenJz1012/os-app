@@ -28,5 +28,5 @@ public interface UserService extends IService<User>{
 
     List<Integer> findUserRoleByUserId(int userId);
 
-    PageInfo<UserVO> findUserList(Integer pageNum, Integer pageSize, User user);
+    PageInfo<User> findUserList(Integer pageNum, Integer pageSize, User user);
 }

@@ -18,50 +18,42 @@ import java.util.List;
  * 创建时间： 2015/9/2
  * 说明：
  */
-@Service("userService")
-public class UserServiceImpl extends BaseService<User> implements UserService {
-    @Autowired
-    UserMapper userMapper;
+@Service("userService") public class UserServiceImpl extends BaseService<User>
+    implements UserService {
+    @Autowired UserMapper userMapper;
 
-    @Override
-    public int insertUser(User user) {
+    @Override public int insertUser(User user) {
         return getMapper().insert(user);
     }
 
-    @Override
-    public int updateUser(User user) {
+    @Override public int updateUser(User user) {
         return getMapper().updateByPrimaryKey(user);
     }
 
-    @Override
-    public User findUserById(int id) {
+    @Override public User findUserById(int id) {
         return getMapper().selectByPrimaryKey(id);
     }
 
-    @Override
-    public User findUserByLoginName(String loginName) {
+    @Override public User findUserByLoginName(String loginName) {
         return userMapper.findUserByLoginName(loginName);
     }
 
-    @Override
-    public int deleteUser(int id) {
+    @Override public int deleteUser(int id) {
         return getMapper().deleteByPrimaryKey(id);
     }
 
-    @Override
-    public int insertUserRole(int userId, int roleId) {
+    @Override public int insertUserRole(int userId, int roleId) {
         return userMapper.insertUserRole(userId, roleId);
     }
 
-    @Override
-    public List<Integer> findUserRoleByUserId(int userId) {
+    @Override public List<Integer> findUserRoleByUserId(int userId) {
         return userMapper.findUserRoleByUserId(userId);
     }
 
-    @Override public PageInfo<UserVO> findUserList(Integer pageNum, Integer pageSize, User user) {
+    @Override public PageInfo<User> findUserList(Integer pageNum, Integer pageSize, User user) {
         PageHelper.startPage(pageNum, pageSize);
-        List<UserVO> list = userMapper.findUserList(user);
-        PageInfo<UserVO> page = new PageInfo<UserVO>(list);
+        List<User> list = userMapper.findUserList(user);
+        PageInfo<User> page = new PageInfo<User>(list);
         return page;
     }
 }

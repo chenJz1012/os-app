@@ -1,30 +1,27 @@
 package com.orangeside.authorization.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "sys_user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@Table(name = "sys_user") public class User {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer id;
 
     /**
      * 登录名
      */
-    @Column(name = "login_name")
-    private String loginName;
+    @Column(name = "login_name") private String loginName;
 
     /**
      * 密码
      */
-    private String password;
+    @JsonIgnore private String password;
 
     /**
      * 显示名称
      */
-    @Column(name = "display_name")
-    private String displayName;
+    @Column(name = "display_name") private String displayName;
 
     /**
      * 状态，0=冻结，1=正常
@@ -34,32 +31,27 @@ public class User {
     /**
      * 未锁定状态，0=正常，1=锁定
      */
-    @Column(name = "account_non_locked")
-    private Boolean accountNonLocked;
+    @Column(name = "account_non_locked") private Boolean accountNonLocked;
 
     /**
      * 账号过期状态，1=正常，0=过期
      */
-    @Column(name = "account_non_expired")
-    private Boolean accountNonExpired;
+    @Column(name = "account_non_expired") private Boolean accountNonExpired;
 
     /**
      * 密码失效状态：1：未失效 0：已失效
      */
-    @Column(name = "credentials_non_expired")
-    private Boolean credentialsNonExpired;
+    @Column(name = "credentials_non_expired") private Boolean credentialsNonExpired;
 
     /**
      * 登陆IP
      */
-    @Column(name = "last_login_ip")
-    private String lastLoginIp;
+    @Column(name = "last_login_ip") private String lastLoginIp;
 
     /**
      * 最后登陆时间
      */
-    @Column(name = "last_login_time")
-    private Date lastLoginTime;
+    @Column(name = "last_login_time") private Date lastLoginTime;
 
     /**
      * 邮箱
@@ -69,20 +61,17 @@ public class User {
     /**
      * 电话
      */
-    @Column(name = "contact_phone")
-    private String contactPhone;
+    @Column(name = "contact_phone") private String contactPhone;
 
     /**
      * 插入时间
      */
-    @Column(name = "insert_time")
-    private Date insertTime;
+    @Column(name = "insert_time") private Date insertTime;
 
     /**
      * 更新时间
      */
-    @Column(name = "update_time")
-    private Date updateTime;
+    @Column(name = "update_time") private Date updateTime;
 
     /**
      * @return id

@@ -13,5 +13,5 @@ public interface UserMapper extends Mapper<User> {
 
     List<Integer> findUserRoleByUserId(int userId);
 
-    List<UserVO> findUserList(User user);
+    List<User> findUserList(User user);
 }

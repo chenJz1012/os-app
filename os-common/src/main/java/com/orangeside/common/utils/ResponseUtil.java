@@ -17,7 +17,7 @@ import java.util.Map;
  * 说明：
  */
 public class ResponseUtil {
-    public static <T> Map<String, Object> fail(String message) {
+    public static Map<String, Object> fail(String message) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", false);
         map.put("message", message);
@@ -36,19 +36,41 @@ public class ResponseUtil {
     public static void writeJson(HttpServletResponse response, Object o) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
-        JsonGenerator jsonGenerator = objectMapper.getJsonFactory().createJsonGenerator(response.getOutputStream(),
-                JsonEncoding.UTF8);
+        JsonGenerator jsonGenerator = objectMapper.getJsonFactory()
+            .createJsonGenerator(response.getOutputStream(), JsonEncoding.UTF8);
         objectMapper.writeValue(jsonGenerator, o);
     }
-    public static void writeJson(HttpServletResponse response, boolean success,Integer code, String message,String targetUrl) throws IOException {
+
+    public static void writeJson(HttpServletResponse response, boolean success, Integer code,
+        String message, String targetUrl) throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", success);
-        if(code!=null)
+        if (code != null)
             map.put("code", code);
         map.put("message", message);
         if (targetUrl != null)
             map.put("targetUrl", targetUrl);
         writeJson(response, map);
+    }
+
+    public static Result success() {
+        return new Result(true, "success");
+    }
+
+    public static Result success(String msg) {
+        return new Result(true, msg);
+    }
+
+    public static <T> Result success(T data) {
+        return new Result(true, "ok", data);
+    }
+
+    public static Result error() {
+        return new Result(false, "error");
+    }
+
+    public static Result error(String msg) {
+        return new Result(false, msg);
     }
 
 }

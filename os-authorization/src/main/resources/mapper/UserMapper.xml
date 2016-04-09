@@ -67,9 +67,17 @@
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
     <select id="findUserList" parameterType="com.orangeside.authorization.model.User"
-            resultMap="UserVoMap">
+            resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_user
+        <where>
+            <if test="displayName != null and displayName != ''">
+                 display_name like concat('%',concat(#{displayName}, '%'))
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and login_name like concat('%',concat(#{loginName}, '%'))
+            </if>
+        </where>
     </select>
 </mapper>
