@@ -35,15 +35,13 @@ import java.util.List;
  */
 public abstract class BaseService<T> implements IService<T> {
 
-    @Autowired
-    protected Mapper<T> mapper;
+    @Autowired protected Mapper<T> mapper;
 
     public Mapper<T> getMapper() {
         return mapper;
     }
 
-    @Override
-    public T selectByKey(Object key) {
+    @Override public T selectByKey(Object key) {
         return mapper.selectByPrimaryKey(key);
     }
 
@@ -65,5 +63,9 @@ public abstract class BaseService<T> implements IService<T> {
 
     public List<T> selectByExample(Object example) {
         return mapper.selectByExample(example);
+    }
+
+    @Override public List<T> selectAll() {
+        return mapper.selectAll();
     }
 }

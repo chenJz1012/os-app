@@ -13,6 +13,7 @@
         <module>os-authorization</module>
         <module>os-sample</module>
         <module>os-web</module>
+        <module>os-test</module>
     </modules>
     <packaging>pom</packaging>
     <developers>
