@@ -20,6 +20,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.orangeside</groupId>
+            <artifactId>os-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>

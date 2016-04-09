@@ -1,6 +1,7 @@
 package com.orangeside.authorization.service;
 
 import com.orangeside.authorization.model.Role;
+import com.orangeside.dao.service.IService;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
  * 创建时间： 2015/9/3
  * 说明：
  */
-public interface RoleService {
+public interface RoleService extends IService<Role>{
     int insertRole(Role role);
 
     int updateRole(Role role);

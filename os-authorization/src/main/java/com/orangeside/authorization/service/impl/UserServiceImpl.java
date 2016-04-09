@@ -6,6 +6,7 @@ import com.orangeside.authorization.dao.UserMapper;
 import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.UserService;
 import com.orangeside.authorization.vo.UserVO;
+import com.orangeside.dao.service.impl.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +18,24 @@ import java.util.List;
  * 创建时间： 2015/9/2
  * 说明：
  */
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl extends BaseService<User> implements UserService {
     @Autowired
     UserMapper userMapper;
 
     @Override
     public int insertUser(User user) {
-        return userMapper.insert(user);
+        return getMapper().insert(user);
     }
 
     @Override
     public int updateUser(User user) {
-        return userMapper.updateByPrimaryKey(user);
+        return getMapper().updateByPrimaryKey(user);
     }
 
     @Override
     public User findUserById(int id) {
-        return userMapper.selectByPrimaryKey(id);
+        return getMapper().selectByPrimaryKey(id);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteUser(int id) {
-        return userMapper.deleteByPrimaryKey(id);
+        return getMapper().deleteByPrimaryKey(id);
     }
 
     @Override

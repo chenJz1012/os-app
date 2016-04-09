@@ -3,6 +3,7 @@ package com.orangeside.authorization.service.impl;
 import com.orangeside.authorization.dao.FunctionMapper;
 import com.orangeside.authorization.model.Function;
 import com.orangeside.authorization.service.FunctionService;
+import com.orangeside.dao.service.impl.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,27 +13,21 @@ import org.springframework.stereotype.Service;
  * 创建时间： 2015/9/4
  * 说明：
  */
-@Service
-public class FunctionServiceImpl implements FunctionService{
-    @Autowired
-    FunctionMapper functionMapper;
-    @Override
-    public int insertFunction(Function function) {
-        return functionMapper.insert(function);
+@Service("functionService") public class FunctionServiceImpl extends BaseService<Function>
+    implements FunctionService {
+    @Override public int insertFunction(Function function) {
+        return getMapper().insert(function);
     }
 
-    @Override
-    public int updateFunction(Function function) {
-        return functionMapper.updateByPrimaryKey(function);
+    @Override public int updateFunction(Function function) {
+        return getMapper().updateByPrimaryKey(function);
     }
 
-    @Override
-    public Function findFuntionById(int id) {
-        return functionMapper.selectByPrimaryKey(id);
+    @Override public Function findFuntionById(int id) {
+        return getMapper().selectByPrimaryKey(id);
     }
 
-    @Override
-    public int deleteFunctionById(int id) {
-        return functionMapper.deleteByPrimaryKey(id);
+    @Override public int deleteFunctionById(int id) {
+        return getMapper().deleteByPrimaryKey(id);
     }
 }

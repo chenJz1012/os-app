@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.orangeside.sample.dao.LoggingEventMapper">
+    <resultMap id="BaseResultMap" type="com.orangeside.sample.model.LoggingEvent">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="event_id" property="eventId" jdbcType="BIGINT"/>
+        <result column="timestmp" property="timestmp" jdbcType="BIGINT"/>
+        <result column="logger_name" property="loggerName" jdbcType="VARCHAR"/>
+        <result column="level_string" property="levelString" jdbcType="VARCHAR"/>
+        <result column="thread_name" property="threadName" jdbcType="VARCHAR"/>
+        <result column="reference_flag" property="referenceFlag" jdbcType="SMALLINT"/>
+        <result column="arg0" property="arg0" jdbcType="VARCHAR"/>
+        <result column="arg1" property="arg1" jdbcType="VARCHAR"/>
+        <result column="arg2" property="arg2" jdbcType="VARCHAR"/>
+        <result column="arg3" property="arg3" jdbcType="VARCHAR"/>
+        <result column="caller_filename" property="callerFilename" jdbcType="VARCHAR"/>
+        <result column="caller_class" property="callerClass" jdbcType="VARCHAR"/>
+        <result column="caller_method" property="callerMethod" jdbcType="VARCHAR"/>
+        <result column="caller_line" property="callerLine" jdbcType="CHAR"/>
+        <result column="formatted_message" property="formattedMessage" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <select id="selectByQueryModel" resultMap="BaseResultMap">
+        select * from logging_event
+        <where>
+            <if test="logName != null and logName != ''">
+                logger_name like concat('%',concat(#{logName}, '%'))
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+
+    </select>
+</mapper>
