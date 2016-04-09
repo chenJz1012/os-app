@@ -12,13 +12,11 @@
     <artifactId>os-dao</artifactId>
 
     <properties>
-        <!--  Java接口和实体类  -->
         <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
         <targetMapperPackage>com.orangeside.dao.dao</targetMapperPackage>
         <targetModelPackage>com.orangeside.dao.model</targetModelPackage>
-        <!--  XML生成路径  -->
-        <targetResourcesProject>${basedir}/src/main/resources/mapper</targetResourcesProject>
-        <targetXMLPackage>dao</targetXMLPackage>
+        <targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
+        <targetXMLPackage>mapper</targetXMLPackage>
     </properties>
 
     <dependencies>
