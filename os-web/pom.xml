@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>os-web</artifactId>
     <packaging>war</packaging>
-    <name>os-web Maven Webapp</name>
+    <name>OS_Web</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

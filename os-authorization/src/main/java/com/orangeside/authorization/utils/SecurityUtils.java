@@ -6,6 +6,8 @@ import com.orangeside.authorization.service.UserService;
 import com.orangeside.authorization.service.impl.UserServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -30,5 +32,15 @@ public class SecurityUtils {
         if (principal instanceof OrangeSideSecurityUser)
             return (OrangeSideSecurityUser) principal;
         return null;
+    }
+
+    public static String encodePassword(String password) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+    public static boolean matchPassword(String password, String encodedPassword) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, encodedPassword);
     }
 }

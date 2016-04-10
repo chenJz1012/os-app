@@ -81,7 +81,7 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
                     String targetUrl = determineExpiredUrl(request, info);
 
                     if (RequestUtil.isAjax(request)) {
-                        ResponseUtil.writeJson(response,false,600,"会话已过期，请重新登录!", targetUrl);
+                        ResponseUtil.writeJson(response,false,304,"会话已过期，请重新登录!", targetUrl);
                         return;
                     }
                     

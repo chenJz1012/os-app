@@ -1,8 +1,11 @@
 package com.orangeside.authorization.model;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Table(name = "sys_user") public class User {
@@ -11,37 +14,37 @@ import java.util.Date;
     /**
      * 登录名
      */
-    @Column(name = "login_name") private String loginName;
+    @Column(name = "login_name") @NotEmpty @Size(min = 4, max = 20) private String loginName;
 
     /**
      * 密码
      */
-    @JsonIgnore private String password;
+    @JsonIgnore @NotEmpty @Size(min = 8, max = 64) private String password;
 
     /**
      * 显示名称
      */
-    @Column(name = "display_name") private String displayName;
+    @Column(name = "display_name") @NotEmpty @Size(max = 20) private String displayName;
 
     /**
      * 状态，0=冻结，1=正常
      */
-    private Boolean enabled;
+    private Boolean enabled = false;
 
     /**
      * 未锁定状态，0=正常，1=锁定
      */
-    @Column(name = "account_non_locked") private Boolean accountNonLocked;
+    @Column(name = "account_non_locked") private Boolean accountNonLocked = true;
 
     /**
      * 账号过期状态，1=正常，0=过期
      */
-    @Column(name = "account_non_expired") private Boolean accountNonExpired;
+    @Column(name = "account_non_expired") private Boolean accountNonExpired = true;
 
     /**
      * 密码失效状态：1：未失效 0：已失效
      */
-    @Column(name = "credentials_non_expired") private Boolean credentialsNonExpired;
+    @Column(name = "credentials_non_expired") private Boolean credentialsNonExpired = true;
 
     /**
      * 登陆IP
@@ -56,7 +59,7 @@ import java.util.Date;
     /**
      * 邮箱
      */
-    private String email;
+    @Email private String email;
 
     /**
      * 电话

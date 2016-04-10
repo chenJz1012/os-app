@@ -4,6 +4,7 @@ package com.orangeside.common.utils;
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -54,23 +55,32 @@ public class ResponseUtil {
     }
 
     public static Result success() {
-        return new Result(true, "success");
+        return new Result(true, 200, "success");
     }
 
     public static Result success(String msg) {
-        return new Result(true, msg);
+        return new Result(true, 200, msg);
     }
 
     public static <T> Result success(T data) {
-        return new Result(true, "ok", data);
+        return new Result(true, 200, "ok", data);
     }
 
     public static Result error() {
-        return new Result(false, "error");
+        return new Result(false, 500, "error");
     }
 
     public static Result error(String msg) {
-        return new Result(false, msg);
+        return new Result(false, 500, msg);
+    }
+
+    public static Result error(BindingResult result) {
+        String msg = "";
+        if (result.hasFieldErrors()) {
+            msg = result.getFieldErrors().get(0).getField() + ":" + result.getFieldError()
+                .getDefaultMessage();
+        }
+        return new Result(false, 500, msg);
     }
 
 }

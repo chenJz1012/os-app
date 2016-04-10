@@ -23,7 +23,7 @@ public class OrangeSideLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenti
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         if(RequestUtil.isAjax(request)){
-            ResponseUtil.writeJson(response,false,null,"请先登录系统！",getLoginFormUrl());
+            ResponseUtil.writeJson(response,false,304,"请先登录系统！",getLoginFormUrl());
             return;
         }
         super.commence(request, response, authException);

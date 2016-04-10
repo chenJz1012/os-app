@@ -13,7 +13,7 @@ import java.util.List;
  * 创建时间： 2015/9/2
  * 说明：
  */
-public interface UserService extends IService<User>{
+public interface UserService extends IService<User> {
     int insertUser(User user);
 
     int updateUser(User user);
@@ -29,4 +29,6 @@ public interface UserService extends IService<User>{
     List<Integer> findUserRoleByUserId(int userId);
 
     PageInfo<User> findUserList(Integer pageNum, Integer pageSize, User user);
+
+    int findExistUser(User user);
 }
