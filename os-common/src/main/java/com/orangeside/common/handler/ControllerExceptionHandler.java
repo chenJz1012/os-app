@@ -2,7 +2,6 @@ package com.orangeside.common.handler;
 
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,7 +27,7 @@ public class ControllerExceptionHandler {
         logger.debug("捕获到异常");
         if (RequestUtil.isAjax(request)) {
             logger.debug("异常来源请求为：{}", "ajax请求");
-            ResponseUtil.fail(response, e.getMessage());
+            ResponseUtil.error(response, e.getMessage());
         } else {
             logger.debug("异常来源请求为：{}", "传统页面请求");
             ModelAndView modelAndView = new ModelAndView(ERROR_500);

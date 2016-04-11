@@ -1,12 +1,11 @@
 package com.orangeside.authorization.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.orangeside.authorization.exception.AuBzConstant;
 import com.orangeside.authorization.exception.AuthBusinessException;
 import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.UserService;
 import com.orangeside.authorization.utils.SecurityUtils;
-import com.orangeside.authorization.vo.UserVO;
-import com.orangeside.common.exception.BusinessException;
 import com.orangeside.common.utils.PageConvertUtil;
 import com.orangeside.common.utils.ResponseUtil;
 import com.orangeside.common.utils.Result;
@@ -19,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by cgj on 2016/4/9.
  */
-@Controller @RequestMapping("/u") public class UserController {
+@Controller @RequestMapping("/urf") public class UserController {
     @Autowired private UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET) @ResponseBody
@@ -40,7 +40,7 @@ import javax.validation.Valid;
             return ResponseUtil.error(result);
         }
         if (userService.findExistUser(user) > 0) {
-            throw new AuthBusinessException(601);
+            throw new AuthBusinessException(AuBzConstant.LOGIN_NAME_EXIST);
         }
         userService.insertUser(user);
         return ResponseUtil.success();
@@ -52,7 +52,7 @@ import javax.validation.Valid;
             return ResponseUtil.error(result);
         }
         if (userService.findExistUser(user) > 0) {
-            throw new AuthBusinessException(601);
+            throw new AuthBusinessException(AuBzConstant.LOGIN_NAME_EXIST);
         }
         userService.updateNotNull(user);
         return ResponseUtil.success();
@@ -64,12 +64,18 @@ import javax.validation.Valid;
         return ResponseUtil.success(user);
     }
 
-    @RequestMapping(value = "/user_del", method = RequestMethod.POST) @ResponseBody
+    @RequestMapping(value = "/user_del", method = RequestMethod.GET) @ResponseBody
     public Result delUser(@RequestParam(value = "id", required = true) int userId) {
-        if(SecurityUtils.getCurrentSecurityUser().getId()==userId){
-            throw new AuthBusinessException(602);
+        if (SecurityUtils.getCurrentSecurityUser().getId() == userId) {
+            throw new AuthBusinessException(AuBzConstant.CANNOT_DEL_CURRENT_USER);
         }
         userService.delete(userId);
         return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/user_roles", method = RequestMethod.GET) @ResponseBody
+    public Result userRoles(@RequestParam(value = "id", required = true) int userId) {
+        List roles = userService.findUserRoleByUserId(userId);
+        return ResponseUtil.success(roles);
     }
 }

@@ -8,14 +8,11 @@ import com.orangeside.common.utils.PropertiesUtil;
  * 创建时间： 2015/9/7
  * 说明：
  */
-public class BusinessException extends RuntimeException {
+public abstract class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 4793699346343027629L;
-    private String PROPERTIES = "/config/properties/business_exception.properties";
     private String err = "";
 
-    protected String getPropertiesPath() {
-        return PROPERTIES;
-    }
+    protected abstract String getPropertiesPath();
 
     public BusinessException(int errCode) {
         this.err = PropertiesUtil.get(getPropertiesPath(), String.valueOf(errCode));

@@ -18,21 +18,6 @@ import java.util.Map;
  * 说明：
  */
 public class ResponseUtil {
-    public static Map<String, Object> fail(String message) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("success", false);
-        map.put("message", message);
-        return map;
-    }
-
-    public static void fail(HttpServletResponse response, String message) {
-        try {
-            Map<String, Object> map = fail(message);
-            writeJson(response, map);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void writeJson(HttpServletResponse response, Object o) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -55,7 +40,7 @@ public class ResponseUtil {
     }
 
     public static Result success() {
-        return new Result(true, 200, "success");
+        return new Result(true, 200, "ok");
     }
 
     public static Result success(String msg) {
@@ -81,6 +66,14 @@ public class ResponseUtil {
                 .getDefaultMessage();
         }
         return new Result(false, 500, msg);
+    }
+
+    public static void error(HttpServletResponse response, String message) {
+        try {
+            writeJson(response, error(message));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
