@@ -1,3 +1,4 @@
+/os-web/src/main/resources/rebel.xml
 ### Maven template
 target/
 pom.xml.tag
