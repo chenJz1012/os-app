@@ -49,12 +49,13 @@
     </authentication-manager>
 
     <beans:bean id="authenticationProvider"
-                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+                class="com.orangeside.authorization.security.OrangeSideCaptchaDaoAuthenticationProvider">
         <beans:property name="userDetailsService" ref="orangeSideUserService"/>
         <beans:property name="hideUserNotFoundExceptions" value="false"/>
-        <beans:property name="passwordEncoder" ref="encoder" />
+        <beans:property name="passwordEncoder" ref="encoder"/>
     </beans:bean>
-    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <!-- 加载用户相关 -->
     <beans:bean id="orangeSideUserService"
@@ -99,8 +100,11 @@
         <beans:property name="authenticationSuccessHandler" ref="osAuthenticationSuccessHandler"/>
         <beans:property name="authenticationFailureHandler" ref="osAuthenticationFailureHandler"/>
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
+        <beans:property name="authenticationDetailsSource" ref="osAuthenticationDetailsSource"/>
     </beans:bean>
 
+    <beans:bean id="osAuthenticationDetailsSource"
+                class="com.orangeside.authorization.security.OrangeSideCaptchaAuthenticationDetailsSource"/>
     <!-- 自定义登录成功handler -->
     <beans:bean id="osAuthenticationSuccessHandler"
                 class="com.orangeside.authorization.security.OrangeSideSavedRequestAwareAuthenticationSuccessHandler">
@@ -137,7 +141,8 @@
     </beans:bean>
 
     <!--session过期相关开始 -->
-    <beans:bean id="concurrencyFilter" class="com.orangeside.authorization.security.OrangeSideConcurrentSessionFilter">
+    <beans:bean id="concurrencyFilter"
+                class="com.orangeside.authorization.security.OrangeSideConcurrentSessionFilter">
         <beans:property name="sessionRegistry" ref="sessionRegistry"/>
         <beans:property name="expiredUrl" value="${security.login}"/>
     </beans:bean>
@@ -163,7 +168,8 @@
         <beans:property name="maximumSessions" value="1"/>
     </beans:bean>
 
-    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
+    <beans:bean id="sessionRegistry"
+                class="org.springframework.security.core.session.SessionRegistryImpl"/>
     <!--session过期相关结束 -->
 
     <!--自定义异常处理Filter 清除ajax请求的saveRequest -->

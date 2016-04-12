@@ -40,9 +40,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <%-- <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
-           type="text/css"/>--%>
     <link href="<%=basePath%>/assets/global/plugins/font-awesome/css/font-awesome.min.css"
           rel="stylesheet"
           type="text/css"/>
@@ -67,6 +64,27 @@ License: You must have a valid license purchased only from themeforest(the above
           type="text/css"
           id="style_color"/>
     <link href="<%=basePath%>/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        #captcha_a {
+            float: left;
+            width: 60%;
+            margin-bottom: inherit;
+            height: 43px;
+        }
+
+        #captcha_img {
+            height: 100%;
+            color: #8290a3;
+            border: 1px solid #dde3ec;
+            width: 95%;
+        }
+
+        input.captcha {
+            float: left;
+            width: 40%;
+            margin-bottom: inherit;
+        }
+    </style>
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="<%=basePath%>favicon.ico"/>
     <script>
@@ -82,7 +100,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGO -->
 <div class="logo">
-    <a href="index.html">
+    <a href="<%=basePath%>/index">
         <img src="<%=basePath%>/assets/admin/layout/img/logo-big.png" alt=""/>
     </a>
 </div>
@@ -112,6 +130,12 @@ License: You must have a valid license purchased only from themeforest(the above
             <input class="form-control form-control-solid placeholder-no-fix" type="password"
                    autocomplete="off"
                    placeholder="Password" name="j_password"/>
+        </div>
+        <div class="form-group">
+            <a id="captcha_a"><img id="captcha_img"
+                                   src="<%=basePath%>/security/web/captcha"></a>
+            <input class="form-control form-control-solid captcha" type="text"
+                   autocomplete="off" placeholder="Captcha" name="j_captcha">
         </div>
         <div class="form-actions">
             <button type="submit" class="btn btn-success uppercase">Login</button>
@@ -503,7 +527,8 @@ License: You must have a valid license purchased only from themeforest(the above
         type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<%=basePath%>/assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="<%=basePath%>/assets/global/scripts/metronic.js?ts=<%=System.currentTimeMillis()%>"
+        type="text/javascript"></script>
 <script src="<%=basePath%>/assets/admin/pages/scripts/login.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>

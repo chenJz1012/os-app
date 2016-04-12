@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -16,6 +17,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,12 +56,12 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
                 handle(request, response, authentication);
                 return;
             }
-            clearAuthenticationAttributes(request);
             // Use the DefaultSavedRequest URL
             String targetUrl = savedRequest.getRedirectUrl();
             logger.debug("Redirecting to DefaultSavedRequest Url: " + targetUrl);
             decideRedirect(request, response, targetUrl);
         } finally {
+            clearAttributes(request);
             logLoginSuccess(authentication, request);
         }
     }
@@ -85,7 +87,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
             return;
         }
         decideRedirect(request, response, targetUrl);
-        clearAuthenticationAttributes(request);
+        clearAttributes(request);
     }
 
     private void logLoginSuccess(Authentication authentication, HttpServletRequest request) {
@@ -167,13 +169,16 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
         this.securityService = securityService;
     }
 
-    /**
-     * Invokes the configured {@code RedirectStrategy} with the URL returned by the {@code determineTargetUrl} method.
-     * <p/>
-     * The redirect will not be performed if the response has already been committed.
-     *
-     * @param request
-     * @param response
-     * @param authentication
-     */
+    protected final void clearCaptcha(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return;
+        }
+        session.removeAttribute(OrangeSideSecurityConstant.CAPTCHA_SESSION_KEY);
+    }
+
+    protected void clearAttributes(HttpServletRequest request) {
+        clearAuthenticationAttributes(request);
+        clearCaptcha(request);
+    }
 }

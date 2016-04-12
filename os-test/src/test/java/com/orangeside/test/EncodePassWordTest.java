@@ -11,8 +11,8 @@ public class EncodePassWordTest extends BasicTest {
 
     @Test public void test() {
         String password = "admin";
-        String encodedPassword = SecurityUtils.encodePassword(password);
+        String encodedPassword = SecurityUtils.encodeString(password);
         System.out.println(encodedPassword);
-        Assert.assertTrue(SecurityUtils.matchPassword(password, encodedPassword));
+        Assert.assertTrue(SecurityUtils.matchString(password, encodedPassword));
     }
 }

@@ -14,6 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>com.orangeside</groupId>
+            <artifactId>os-patchca</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.orangeside</groupId>
             <artifactId>os-web</artifactId>
             <version>${project.version}</version>
         </dependency>

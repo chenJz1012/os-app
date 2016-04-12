@@ -6,13 +6,9 @@ import com.orangeside.authorization.dao.UserMapper;
 import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.UserService;
 import com.orangeside.authorization.utils.SecurityUtils;
-import com.orangeside.authorization.vo.UserVO;
 import com.orangeside.dao.service.impl.BaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +24,13 @@ import java.util.List;
     @Autowired UserMapper userMapper;
 
     @Override public int insertUser(User user) {
-        user.setPassword(SecurityUtils.encodePassword(user.getPassword()));
+        user.setPassword(SecurityUtils.encodeString(user.getPassword()));
         return getMapper().insert(user);
     }
 
     @Override public int updateUser(User user) {
         if(StringUtils.isNotEmpty(user.getPassword())){
-            user.setPassword(SecurityUtils.encodePassword(user.getPassword()));
+            user.setPassword(SecurityUtils.encodeString(user.getPassword()));
         }
         return getMapper().updateByPrimaryKey(user);
     }

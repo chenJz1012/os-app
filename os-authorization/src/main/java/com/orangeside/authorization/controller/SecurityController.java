@@ -1,8 +1,11 @@
 package com.orangeside.authorization.controller;
 
+import com.orangeside.authorization.security.OrangeSideSecurityConstant;
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.utils.SecurityUtils;
-import com.orangeside.authorization.model.User;
+import com.orangeside.patchca.utils.ImageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +28,7 @@ import java.util.Map;
  * 说明：
  */
 @Controller @RequestMapping("/security") public class SecurityController {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityController.class);
     @Autowired SessionRegistry sessionRegistry;
 
     @RequestMapping("/login") public String login() {
@@ -63,5 +70,13 @@ import java.util.Map;
             map.put("os_isLogin", false);
         }
         return map;
+    }
+
+    @RequestMapping(value = "/web/captcha", produces = "text/html;charset=UTF-8")
+    public void captcha(HttpServletResponse response, HttpSession session) throws IOException {
+        String captcha = ImageUtils.getPatchcaString(response);
+        logger.debug(session.getId() + "-验证码:[{}]", captcha);
+        session.setAttribute(OrangeSideSecurityConstant.CAPTCHA_SESSION_KEY,
+            SecurityUtils.encodeString(captcha));
     }
 }

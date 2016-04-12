@@ -34,13 +34,13 @@ public class SecurityUtils {
         return null;
     }
 
-    public static String encodePassword(String password) {
+    public static String encodeString(String character) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
+        return passwordEncoder.encode(character);
     }
 
-    public static boolean matchPassword(String password, String encodedPassword) {
+    public static boolean matchString(String character, String encodedCharacter) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(password, encodedPassword);
+        return passwordEncoder.matches(character, encodedCharacter);
     }
 }

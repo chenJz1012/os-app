@@ -26,7 +26,8 @@ import java.util.Map;
  * 创建时间： 2015/9/9
  * 说明：
  */
-public class OrangeSideSimpleUrlAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class OrangeSideSimpleUrlAuthenticationFailureHandler
+    implements AuthenticationFailureHandler {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String defaultFailureUrl;
@@ -49,7 +50,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
      * the target view.
      */
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
+        AuthenticationException exception) throws IOException, ServletException {
         try {
             if (RequestUtil.isAjax(request)) {
                 writeJson(response, exception);
@@ -58,7 +59,8 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
             }
             if (defaultFailureUrl == null) {
                 logger.debug("No failure URL set, sending 401 Unauthorized error");
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed: " + exception.getMessage());
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                    "Authentication Failed: " + exception.getMessage());
             } else {
                 saveException(request, exception);
 
@@ -72,12 +74,16 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
                 }
             }
         } finally {
-            logger.info("登录系统失败;原因:"+exception.getMessage()+";日志类型:{};用户:{};登录IP:{};", LOGIN, "-", RequestUtil.getIpAddress(request));
+            clearCaptcha(request);
+            logger
+                .info("登录系统失败;原因:" + exception.getMessage() + ";日志类型:{};用户:{};登录IP:{};", LOGIN, "-",
+                    RequestUtil.getIpAddress(request));
         }
 
     }
 
-    private void writeJson(HttpServletResponse response, AuthenticationException exception) throws IOException {
+    private void writeJson(HttpServletResponse response, AuthenticationException exception)
+        throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", false);
         map.put("message", exception.getMessage());
@@ -93,14 +99,16 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
      * the exception in the session. If there is no session and {@code allowSessionCreation} is {@code true} a session
      * will be created. Otherwise the exception will not be stored.
      */
-    protected final void saveException(HttpServletRequest request, AuthenticationException exception) {
+    protected final void saveException(HttpServletRequest request,
+        AuthenticationException exception) {
         if (forwardToDestination) {
             request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
         } else {
             HttpSession session = request.getSession(false);
 
             if (session != null || allowSessionCreation) {
-                request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+                request.getSession()
+                    .setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
             }
         }
     }
@@ -112,7 +120,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
      */
     public void setDefaultFailureUrl(String defaultFailureUrl) {
         Assert.isTrue(UrlUtils.isValidRedirectUrl(defaultFailureUrl),
-                "'" + defaultFailureUrl + "' is not a valid redirect URL");
+            "'" + defaultFailureUrl + "' is not a valid redirect URL");
         this.defaultFailureUrl = defaultFailureUrl;
     }
 
@@ -145,5 +153,13 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler implements Authenti
 
     public void setAllowSessionCreation(boolean allowSessionCreation) {
         this.allowSessionCreation = allowSessionCreation;
+    }
+
+    protected void clearCaptcha(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return;
+        }
+        session.removeAttribute(OrangeSideSecurityConstant.CAPTCHA_SESSION_KEY);
     }
 }

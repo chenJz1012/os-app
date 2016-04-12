@@ -129,7 +129,8 @@
 <a href="<%=basePath%>/security/logout">退出登录</a><br/>
 <a href="javascript:ajaxLogout();">ajax退出登录</a><br/>
 <a href="javascript:testAjax403();">测试ajax权限拦截</a><br>
-<a href="javascript:getOnlineUser();">获取在线用户</a>
+<a href="javascript:getOnlineUser();">获取在线用户</a><br>
+<img src="<%=basePath%>/security/web/captcha"/>
 <br/>
 <table>
     <thead>
