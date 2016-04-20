@@ -9,6 +9,6 @@ import java.util.Map;
 /**
  * Created by cgj on 2016/4/9.
  */
-public interface LoggingEventService extends IService<LoggingEvent>{
+public interface LoggingEventService extends IService<LoggingEvent> {
     public List<LoggingEvent> listByQueryModel(Map argMap);
 }

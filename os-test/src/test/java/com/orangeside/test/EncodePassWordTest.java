@@ -1,6 +1,8 @@
 package com.orangeside.test;
 
+import com.orangeside.BasicTest;
 import com.orangeside.authorization.utils.SecurityUtils;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +11,8 @@ import org.junit.Test;
  */
 public class EncodePassWordTest extends BasicTest {
 
-    @Test public void test() {
+    @Test
+    public void test() {
         String password = "admin";
         String encodedPassword = SecurityUtils.encodeString(password);
         System.out.println(encodedPassword);

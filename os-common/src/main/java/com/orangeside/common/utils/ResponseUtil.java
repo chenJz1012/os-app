@@ -7,15 +7,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/6
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/6 说明：
  */
 public class ResponseUtil {
 
@@ -23,12 +21,12 @@ public class ResponseUtil {
         ObjectMapper objectMapper = new ObjectMapper();
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
         JsonGenerator jsonGenerator = objectMapper.getJsonFactory()
-            .createJsonGenerator(response.getOutputStream(), JsonEncoding.UTF8);
+                .createJsonGenerator(response.getOutputStream(), JsonEncoding.UTF8);
         objectMapper.writeValue(jsonGenerator, o);
     }
 
     public static void writeJson(HttpServletResponse response, boolean success, Integer code,
-        String message, String targetUrl) throws IOException {
+                                 String message, String targetUrl) throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", success);
         if (code != null)
@@ -63,7 +61,7 @@ public class ResponseUtil {
         String msg = "";
         if (result.hasFieldErrors()) {
             msg = result.getFieldErrors().get(0).getField() + ":" + result.getFieldError()
-                .getDefaultMessage();
+                    .getDefaultMessage();
         }
         return new Result(false, 500, msg);
     }

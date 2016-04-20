@@ -2,6 +2,7 @@ package com.orangeside.authorization.security;
 
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,15 +13,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/10
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/10 说明：
  */
 public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
     //~ Static fields/initializers =====================================================================================
@@ -35,8 +34,8 @@ public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
 
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
-        if(RequestUtil.isAjax(request)){
-            ResponseUtil.writeJson(response,false,403,"没有权限访问!",errorPage);
+        if (RequestUtil.isAjax(request)) {
+            ResponseUtil.writeJson(response, false, 403, "没有权限访问!", errorPage);
             return;
         }
         if (!response.isCommitted()) {
@@ -57,10 +56,10 @@ public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
     }
 
     /**
-     * The error page to use. Must begin with a "/" and is interpreted relative to the current context root.
+     * The error page to use. Must begin with a "/" and is interpreted relative to the current
+     * context root.
      *
      * @param errorPage the dispatcher path to display
-     *
      * @throws IllegalArgumentException if the argument doesn't comply with the above limitations
      */
     public void setErrorPage(String errorPage) {

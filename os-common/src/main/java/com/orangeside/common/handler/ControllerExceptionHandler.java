@@ -2,6 +2,7 @@ package com.orangeside.common.handler;
 
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,10 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/6
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/6 说明：
  */
 @ControllerAdvice
 public class ControllerExceptionHandler {

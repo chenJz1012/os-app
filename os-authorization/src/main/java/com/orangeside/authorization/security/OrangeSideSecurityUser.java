@@ -7,17 +7,14 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/4
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/4 说明：
  */
 public class OrangeSideSecurityUser extends User {
     public OrangeSideSecurityUser(com.orangeside.authorization.model.User user,
-        Collection<GrantedAuthority> userGrantedAuthorities) {
+                                  Collection<GrantedAuthority> userGrantedAuthorities) {
         super(user.getLoginName(), user.getPassword(), user.getEnabled(),
-            user.getAccountNonExpired(), user.getCredentialsNonExpired(),
-            user.getAccountNonLocked(), userGrantedAuthorities);
+                user.getAccountNonExpired(), user.getCredentialsNonExpired(),
+                user.getAccountNonLocked(), userGrantedAuthorities);
         if (user != null) {
             setId(user.getId());
             setLoginName(user.getLoginName());

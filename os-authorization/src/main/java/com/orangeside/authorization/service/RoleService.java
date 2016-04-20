@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/3
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/3 说明：
  */
-public interface RoleService extends IService<Role>{
+public interface RoleService extends IService<Role> {
     int insertRole(Role role);
 
     int updateRole(Role role);

@@ -6,6 +6,7 @@ import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.FunctionService;
 import com.orangeside.authorization.service.RoleService;
 import com.orangeside.authorization.service.UserService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,21 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import java.util.List;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/2
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/2 说明：
  */
-@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration(locations = {"/config/spring.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/config/spring.xml"})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringContextTests {
-    @Autowired UserService userService;
-    @Autowired RoleService roleService;
-    @Autowired FunctionService functionService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    RoleService roleService;
+    @Autowired
+    FunctionService functionService;
 
-    @Test public void insertUser() {
+    @Test
+    public void insertUser() {
         User user = new User();
         user.setLoginName("admin");
         user.setPassword("admin");
@@ -43,7 +46,8 @@ public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringConte
         System.out.println("用户id：执行结果===============" + user.getId());
     }
 
-    @Test public void listUser() {
+    @Test
+    public void listUser() {
         List<User> users = userService.selectAll();
         for (User user : users) {
             System.out.println("获取用户：执行结果===============" + user.getDisplayName());
@@ -51,11 +55,13 @@ public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringConte
 
     }
 
-    @Test public void deleteUser() {
+    @Test
+    public void deleteUser() {
         System.out.println("删除用户：执行结果===============" + userService.deleteUser(1));
     }
 
-    @Test public void insertRole() {
+    @Test
+    public void insertRole() {
         Role role = new Role();
         role.setRoleName("role-admin");
         role.setState(1);
@@ -65,7 +71,8 @@ public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringConte
     }
 
 
-    @Test public void initUserRole() {
+    @Test
+    public void initUserRole() {
         User user = new User();
         user.setLoginName("admin");
         user.setPassword("admin");
@@ -84,11 +91,12 @@ public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringConte
         System.out.println("角色id：执行结果===============" + role.getId());
 
         System.out.println("插入用户和角色关系：执行结果===============" + userService
-            .insertUserRole(user.getId(), role.getId()));
+                .insertUserRole(user.getId(), role.getId()));
 
     }
 
-    @Test public void initRoleFunction() {
+    @Test
+    public void initRoleFunction() {
         functionService.deleteFunctionById(2);
         Function function = new Function();
         function.setState(1);
@@ -100,7 +108,7 @@ public class UserRoleFunctionTest extends AbstractTransactionalJUnit4SpringConte
         System.out.println("插入功能：执行结果===============" + functionService.insertFunction(function));
         System.out.println("功能id：===============" + function.getId());
         System.out.println(
-            "插入角色和功能关系：执行结果===============" + roleService.insertRoleFunction(4, function.getId()));
+                "插入角色和功能关系：执行结果===============" + roleService.insertRoleFunction(4, function.getId()));
 
     }
 

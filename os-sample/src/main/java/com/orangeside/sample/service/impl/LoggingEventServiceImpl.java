@@ -4,6 +4,7 @@ import com.orangeside.dao.service.impl.BaseService;
 import com.orangeside.sample.dao.LoggingEventMapper;
 import com.orangeside.sample.model.LoggingEvent;
 import com.orangeside.sample.service.LoggingEventService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,15 @@ import java.util.Map;
 /**
  * Created by cgj on 2016/4/9.
  */
-@Service("loggingEventService") public class LoggingEventServiceImpl
-    extends BaseService<LoggingEvent> implements LoggingEventService {
+@Service("loggingEventService")
+public class LoggingEventServiceImpl
+        extends BaseService<LoggingEvent> implements LoggingEventService {
 
-    @Autowired LoggingEventMapper loggingEventMapper;
+    @Autowired
+    LoggingEventMapper loggingEventMapper;
 
-    @Override public List<LoggingEvent> listByQueryModel(Map argMap) {
+    @Override
+    public List<LoggingEvent> listByQueryModel(Map argMap) {
         return loggingEventMapper.selectByQueryModel(argMap);
     }
 }

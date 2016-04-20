@@ -3,14 +3,17 @@ package com.orangeside.test;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.orangeside.BasicTest;
 import com.orangeside.authorization.service.RoleService;
 import com.orangeside.sample.model.LoggingEvent;
 import com.orangeside.sample.service.LoggingEventService;
+
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.HashMap;
@@ -22,12 +25,16 @@ public class PageMapperTest extends BasicTest {
     //    @Autowired
     //    private CountryMapper countryMapper;
 
-    @Autowired private SqlSession sqlSession;
-    @Autowired private RoleService roleService;
-    @Autowired private LoggingEventService loggingEventService;
+    @Autowired
+    private SqlSession sqlSession;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private LoggingEventService loggingEventService;
 
 
-    @Test public void test() {
+    @Test
+    public void test() {
         Example example = new Example(LoggingEvent.class);
         PageHelper.startPage(2, 10);
         List<LoggingEvent> loggingEvents = loggingEventService.selectByExample(example);
@@ -42,7 +49,8 @@ public class PageMapperTest extends BasicTest {
         logger.info("{}", pageInfo2.getList().size());
     }
 
-    @Test public void test2() {
+    @Test
+    public void test2() {
         List<Map> list = roleService.findRoleMatchUpFunctions();
         logger.info("{}", list.size());
     }

@@ -4,6 +4,7 @@ import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.UserService;
 import com.orangeside.authorization.service.impl.UserServiceImpl;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

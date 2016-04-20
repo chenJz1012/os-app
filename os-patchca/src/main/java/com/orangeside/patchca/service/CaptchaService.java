@@ -20,5 +20,5 @@ package com.orangeside.patchca.service;
 
 public interface CaptchaService {
 
-	Captcha getCaptcha();
+    Captcha getCaptcha();
 }

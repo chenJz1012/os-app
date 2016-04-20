@@ -6,6 +6,7 @@ import com.orangeside.authorization.model.Role;
 import com.orangeside.authorization.model.User;
 import com.orangeside.authorization.service.RoleService;
 import com.orangeside.authorization.service.UserService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
@@ -17,10 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/4
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/4 说明：
  */
 @Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
@@ -54,13 +52,13 @@ public class SecurityServiceImpl implements SecurityService {
         if (roleFunctions != null && roleFunctions.size() > 0) {
             for (Map roleFunction : roleFunctions) {
                 String url = (String) roleFunction.get("function");
-                Integer role = (Integer)roleFunction.get("role");
+                Integer role = (Integer) roleFunction.get("role");
                 Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-                if(!resourceMap.containsKey(url)){
+                if (!resourceMap.containsKey(url)) {
                     configAttributes.add(new SecurityConfig(String.valueOf(role)));
-                    resourceMap.put(url,configAttributes);
-                }else{
-                    ConfigAttribute configAttribute =  new SecurityConfig(String.valueOf(role));
+                    resourceMap.put(url, configAttributes);
+                } else {
+                    ConfigAttribute configAttribute = new SecurityConfig(String.valueOf(role));
                     configAttributes = resourceMap.get(url);
                     configAttributes.add(configAttribute);
                     resourceMap.put(url, configAttributes);
@@ -73,7 +71,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public String getDefaultAction(int roleId) {
         Role role = roleService.findRoleById(roleId);
-        if(StringUtils.isNotBlank(role.getDefaultAction()))
+        if (StringUtils.isNotBlank(role.getDefaultAction()))
             return role.getDefaultAction();
         return "";
     }

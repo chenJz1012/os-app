@@ -2,6 +2,7 @@ package com.orangeside.authorization.security;
 
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -16,18 +17,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/9
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/9 说明：
  */
 public class OrangeSideSimpleUrlAuthenticationFailureHandler
-    implements AuthenticationFailureHandler {
+        implements AuthenticationFailureHandler {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String defaultFailureUrl;
@@ -44,13 +43,14 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
     }
 
     /**
-     * Performs the redirect or forward to the {@code defaultFailureUrl} if set, otherwise returns a 401 error code.
+     * Performs the redirect or forward to the {@code defaultFailureUrl} if set, otherwise returns a
+     * 401 error code.
      * <p/>
-     * If redirecting or forwarding, {@code saveException} will be called to cache the exception for use in
-     * the target view.
+     * If redirecting or forwarding, {@code saveException} will be called to cache the exception for
+     * use in the target view.
      */
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-        AuthenticationException exception) throws IOException, ServletException {
+                                        AuthenticationException exception) throws IOException, ServletException {
         try {
             if (RequestUtil.isAjax(request)) {
                 writeJson(response, exception);
@@ -60,7 +60,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
             if (defaultFailureUrl == null) {
                 logger.debug("No failure URL set, sending 401 Unauthorized error");
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                    "Authentication Failed: " + exception.getMessage());
+                        "Authentication Failed: " + exception.getMessage());
             } else {
                 saveException(request, exception);
 
@@ -76,14 +76,14 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
         } finally {
             clearCaptcha(request);
             logger
-                .info("登录系统失败;原因:" + exception.getMessage() + ";日志类型:{};用户:{};登录IP:{};", LOGIN, "-",
-                    RequestUtil.getIpAddress(request));
+                    .info("登录系统失败;原因:" + exception.getMessage() + ";日志类型:{};用户:{};登录IP:{};", LOGIN, "-",
+                            RequestUtil.getIpAddress(request));
         }
 
     }
 
     private void writeJson(HttpServletResponse response, AuthenticationException exception)
-        throws IOException {
+            throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", false);
         map.put("message", exception.getMessage());
@@ -95,12 +95,13 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
     /**
      * Caches the {@code AuthenticationException} for use in view rendering.
      * <p/>
-     * If {@code forwardToDestination} is set to true, request scope will be used, otherwise it will attempt to store
-     * the exception in the session. If there is no session and {@code allowSessionCreation} is {@code true} a session
-     * will be created. Otherwise the exception will not be stored.
+     * If {@code forwardToDestination} is set to true, request scope will be used, otherwise it will
+     * attempt to store the exception in the session. If there is no session and {@code
+     * allowSessionCreation} is {@code true} a session will be created. Otherwise the exception will
+     * not be stored.
      */
     protected final void saveException(HttpServletRequest request,
-        AuthenticationException exception) {
+                                       AuthenticationException exception) {
         if (forwardToDestination) {
             request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
         } else {
@@ -108,7 +109,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
 
             if (session != null || allowSessionCreation) {
                 request.getSession()
-                    .setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+                        .setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
             }
         }
     }
@@ -120,7 +121,7 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
      */
     public void setDefaultFailureUrl(String defaultFailureUrl) {
         Assert.isTrue(UrlUtils.isValidRedirectUrl(defaultFailureUrl),
-            "'" + defaultFailureUrl + "' is not a valid redirect URL");
+                "'" + defaultFailureUrl + "' is not a valid redirect URL");
         this.defaultFailureUrl = defaultFailureUrl;
     }
 
@@ -129,8 +130,8 @@ public class OrangeSideSimpleUrlAuthenticationFailureHandler
     }
 
     /**
-     * If set to <tt>true</tt>, performs a forward to the failure destination URL instead of a redirect. Defaults to
-     * <tt>false</tt>.
+     * If set to <tt>true</tt>, performs a forward to the failure destination URL instead of a
+     * redirect. Defaults to <tt>false</tt>.
      */
     public void setUseForward(boolean forwardToDestination) {
         this.forwardToDestination = forwardToDestination;

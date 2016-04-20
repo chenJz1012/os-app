@@ -2,6 +2,7 @@ package com.orangeside.authorization.security;
 
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionInformation;
@@ -21,15 +22,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/10
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/10 说明：
  */
 public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
     //~ Instance fields ================================================================================================
@@ -81,10 +80,10 @@ public class OrangeSideConcurrentSessionFilter extends GenericFilterBean {
                     String targetUrl = determineExpiredUrl(request, info);
 
                     if (RequestUtil.isAjax(request)) {
-                        ResponseUtil.writeJson(response,false,304,"会话已过期，请重新登录!", targetUrl);
+                        ResponseUtil.writeJson(response, false, 304, "会话已过期，请重新登录!", targetUrl);
                         return;
                     }
-                    
+
                     if (targetUrl != null) {
                         redirectStrategy.sendRedirect(request, response, targetUrl);
                         return;

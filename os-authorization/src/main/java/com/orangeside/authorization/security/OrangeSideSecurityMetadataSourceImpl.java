@@ -1,6 +1,7 @@
 package com.orangeside.authorization.security;
 
 import com.orangeside.authorization.service.SecurityService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.ConfigAttribute;
@@ -9,13 +10,11 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.*;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/4
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/4 说明：
  */
 public class OrangeSideSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
     protected Logger logger = LoggerFactory.getLogger(getClass());

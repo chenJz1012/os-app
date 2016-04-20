@@ -20,5 +20,5 @@ package com.orangeside.patchca.word;
 
 public interface WordFactory {
 
-	String getNextWord();
+    String getNextWord();
 }

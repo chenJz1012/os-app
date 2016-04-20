@@ -3,6 +3,7 @@ package com.orangeside.authorization.security;
 import com.orangeside.authorization.service.SecurityService;
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -18,18 +19,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/8
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/8 说明：
  */
 public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
-    extends SimpleUrlAuthenticationSuccessHandler {
+        extends SimpleUrlAuthenticationSuccessHandler {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private RequestCache requestCache = new HttpSessionRequestCache();
@@ -42,7 +41,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) throws ServletException, IOException {
+                                        Authentication authentication) throws ServletException, IOException {
         try {
             SavedRequest savedRequest = requestCache.getRequest(request, response);
             if (savedRequest == null) {
@@ -51,7 +50,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
             }
             String targetUrlParameter = getTargetUrlParameter();
             if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils
-                .hasText(request.getParameter(targetUrlParameter)))) {
+                    .hasText(request.getParameter(targetUrlParameter)))) {
                 requestCache.removeRequest(request, response);
                 handle(request, response, authentication);
                 return;
@@ -71,16 +70,13 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
     }
 
     /**
-     * Invokes the configured {@code RedirectStrategy} with the URL returned by the {@code determineTargetUrl} method.
-     * <p>
-     * The redirect will not be performed if the response has already been committed.
-     *
-     * @param request
-     * @param response
-     * @param authentication
+     * Invokes the configured {@code RedirectStrategy} with the URL returned by the {@code
+     * determineTargetUrl} method. <p> The redirect will not be performed if the response has
+     * already been committed.
      */
-    @Override protected void handle(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) throws IOException, ServletException {
+    @Override
+    protected void handle(HttpServletRequest request, HttpServletResponse response,
+                          Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(request, response, authentication);
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
@@ -98,11 +94,11 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
             username = authentication.getPrincipal().toString();
         }
         logger.info("登录系统成功;日志类型:{};用户:{};登录IP:{};", LOGIN, username,
-            RequestUtil.getIpAddress(request));
+                RequestUtil.getIpAddress(request));
     }
 
     private void decideRedirect(HttpServletRequest request, HttpServletResponse response,
-        String targetUrl) throws IOException {
+                                String targetUrl) throws IOException {
         if (RequestUtil.isAjax(request)) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("success", true);
@@ -116,12 +112,9 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
 
     /**
      * Builds the target URL according to the logic defined in the main class Javadoc.
-     *
-     * @param request
-     * @param response
      */
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) {
+                                        Authentication authentication) {
         if (isAlwaysUseDefaultTargetUrl()) {
             return getDefaultTargetUrl();
         }
@@ -143,7 +136,7 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
         String defaultAction = "";
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
             defaultAction =
-                securityService.getDefaultAction(Integer.valueOf(grantedAuthority.getAuthority()));
+                    securityService.getDefaultAction(Integer.valueOf(grantedAuthority.getAuthority()));
             if (StringUtils.hasText(defaultAction)) {
                 targetUrl = defaultAction;
                 logger.debug("Using role defaultAction: " + targetUrl);
@@ -157,7 +150,8 @@ public class OrangeSideSavedRequestAwareAuthenticationSuccessHandler
         return targetUrl;
     }
 
-    @Override public void setUseReferer(boolean useReferer) {
+    @Override
+    public void setUseReferer(boolean useReferer) {
         this.useReferer = useReferer;
     }
 

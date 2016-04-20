@@ -27,7 +27,9 @@ package com.orangeside.dao.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.orangeside.dao.service.IService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -37,13 +39,15 @@ import java.util.List;
  */
 public abstract class BaseService<T> implements IService<T> {
 
-    @Autowired protected Mapper<T> mapper;
+    @Autowired
+    protected Mapper<T> mapper;
 
     public Mapper<T> getMapper() {
         return mapper;
     }
 
-    @Override public T selectByKey(Object key) {
+    @Override
+    public T selectByKey(Object key) {
         return mapper.selectByPrimaryKey(key);
     }
 
@@ -67,7 +71,8 @@ public abstract class BaseService<T> implements IService<T> {
         return mapper.selectByExample(example);
     }
 
-    @Override public List<T> selectAll() {
+    @Override
+    public List<T> selectAll() {
         return mapper.selectAll();
     }
 }

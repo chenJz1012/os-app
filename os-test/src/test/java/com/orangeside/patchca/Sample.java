@@ -11,8 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * sample code
- * Created by shijinkui on 15/3/15.
+ * sample code Created by shijinkui on 15/3/15.
  */
 public class Sample {
     public static void main(String[] args) throws IOException {

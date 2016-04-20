@@ -1,7 +1,7 @@
 package com.orangeside.authorization.dao;
 
 import com.orangeside.authorization.model.User;
-import com.orangeside.authorization.vo.UserVO;
+
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;

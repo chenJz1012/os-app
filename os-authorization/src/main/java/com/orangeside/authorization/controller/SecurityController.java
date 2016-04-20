@@ -4,6 +4,7 @@ import com.orangeside.authorization.security.OrangeSideSecurityConstant;
 import com.orangeside.authorization.security.OrangeSideSecurityUser;
 import com.orangeside.authorization.utils.SecurityUtils;
 import com.orangeside.patchca.utils.ImageUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,20 +24,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/1
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/1 说明：
  */
-@Controller @RequestMapping("/security") public class SecurityController {
+@Controller
+@RequestMapping("/security")
+public class SecurityController {
     private static final Logger logger = LoggerFactory.getLogger(SecurityController.class);
-    @Autowired SessionRegistry sessionRegistry;
+    @Autowired
+    SessionRegistry sessionRegistry;
 
-    @RequestMapping("/login") public String login() {
+    @RequestMapping("/login")
+    public String login() {
         return "login";
     }
 
-    @RequestMapping("/web/onlineUser") public @ResponseBody Object onlineUser() {
+    @RequestMapping("/web/onlineUser")
+    public
+    @ResponseBody
+    Object onlineUser() {
         List<SessionInformation> sessions = new ArrayList<SessionInformation>();
         for (Object o : sessionRegistry.getAllPrincipals()) {
             for (SessionInformation sessionInformation : sessionRegistry.getAllSessions(o, false)) {
@@ -45,8 +51,10 @@ import java.util.Map;
         return sessions;
     }
 
-    @RequestMapping(value = "/web/loginStateScript", produces = "text/html;charset=UTF-8") public
-    @ResponseBody String loginStateScript() {
+    @RequestMapping(value = "/web/loginStateScript", produces = "text/html;charset=UTF-8")
+    public
+    @ResponseBody
+    String loginStateScript() {
         StringBuffer stringBuffer = new StringBuffer();
         String userName = SecurityUtils.getCurrentUserName();
         if (userName != null) {
@@ -58,7 +66,10 @@ import java.util.Map;
         return stringBuffer.toString();
     }
 
-    @RequestMapping(value = "/web/loginStateJson") public @ResponseBody Object loginStateJson() {
+    @RequestMapping(value = "/web/loginStateJson")
+    public
+    @ResponseBody
+    Object loginStateJson() {
         Map map = new HashMap();
         String userName = SecurityUtils.getCurrentUserName();
         if (userName != null) {
@@ -77,6 +88,6 @@ import java.util.Map;
         String captcha = ImageUtils.getPatchcaString(response);
         logger.debug(session.getId() + "-验证码:[{}]", captcha);
         session.setAttribute(OrangeSideSecurityConstant.CAPTCHA_SESSION_KEY,
-            SecurityUtils.encodeString(captcha));
+                SecurityUtils.encodeString(captcha));
     }
 }

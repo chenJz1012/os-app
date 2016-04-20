@@ -9,6 +9,7 @@ import com.orangeside.patchca.service.ConfigurableCaptchaService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class ImageUtils {
         ConfigurableCaptchaService cs = new ConfigurableCaptchaService();
         cs.setColorFactory(new SingleColorFactory(new Color(25, 60, 170)));
         cs.setFilterFactory(new CurvesRippleFilterFactory(cs.getColorFactory()));
-        cs.setBackgroundFactory(new SingleColorBackgroundFactory(new Color(221,227,236)));
+        cs.setBackgroundFactory(new SingleColorBackgroundFactory(new Color(221, 227, 236)));
         Captcha captcha = cs.getCaptcha();
         ImageIO.write(captcha.getImage(), "png", response.getOutputStream());
         return captcha;

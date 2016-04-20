@@ -6,4 +6,5 @@ package com.orangeside.authorization.security;
 public class OrangeSideSecurityConstant {
     public static final String CAPTCHA_SESSION_KEY = "captcha";
     public static final String CAPTCHA_REQUEST_KEY = "j_captcha";
+    public static final String USER_CACHE_PREFIX="os_user_cache_";
 }

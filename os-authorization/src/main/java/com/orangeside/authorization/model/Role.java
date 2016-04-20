@@ -1,6 +1,7 @@
 package com.orangeside.authorization.model;
 
 import javax.persistence.*;
+
 import java.util.Date;
 
 @Table(name = "sys_role")

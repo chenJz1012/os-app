@@ -5,10 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 工程：os-app
- * 创建人 : ChenGJ
- * 创建时间： 2015/9/8
- * 说明：
+ * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/8 说明：
  */
 public class RequestUtil {
     public static boolean isAjax(HttpServletRequest request) {
@@ -18,7 +15,7 @@ public class RequestUtil {
         return false;
     }
 
-    public static String getIpAddress(HttpServletRequest request){
+    public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
@@ -35,8 +32,8 @@ public class RequestUtil {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if(StringUtils.isBlank(ip))
-            ip="未知IP";
+        if (StringUtils.isBlank(ip))
+            ip = "未知IP";
         return ip;
     }
 }
