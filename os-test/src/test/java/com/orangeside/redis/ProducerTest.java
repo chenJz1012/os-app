@@ -6,16 +6,15 @@ import com.orangeside.redis.mq.Consumer;
 import com.orangeside.redis.mq.Producer;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
-import redis.clients.jedis.Jedis;
+import java.io.IOException;
 
 import javax.annotation.Resource;
 
-import java.io.IOException;
+import redis.clients.jedis.Jedis;
 
 public class ProducerTest extends BasicTest {
     @Resource(name = "jedisConnFactory")
@@ -47,7 +46,7 @@ public class ProducerTest extends BasicTest {
         Producer p = new Producer(jedis, "foo");
         Consumer c = new Consumer(jedis, "a subscriber", "foo");
 
-        p.publish("hello world!");
+        p.publish("hello world!!");
         assertEquals("hello world!", c.read());
         assertEquals("hello world!", c.read());
     }

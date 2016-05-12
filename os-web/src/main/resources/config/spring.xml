@@ -8,5 +8,6 @@
       http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath*:config/properties/*.properties"/>
     <context:component-scan base-package="com.orangeside.*.service"/>
+    <import resource="classpath*:/config/spring/init-*.xml"/>
     <import resource="classpath*:/config/spring/spring-*.xml"/>
 </beans>

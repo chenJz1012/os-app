@@ -4,17 +4,14 @@ import com.orangeside.BasicTest;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.annotation.Resource;
-
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.annotation.Resource;
 
 /**
  * Created by cgj on 2016/4/12.
@@ -45,5 +42,7 @@ public class RedisTest extends BasicTest {
         for (String s : treeSet) {
             System.out.println(s);
         }
+
+
     }
 }

@@ -5,17 +5,16 @@ import com.orangeside.redis.mq.Consumer;
 import com.orangeside.redis.mq.Producer;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
-import redis.clients.jedis.Jedis;
+import java.io.IOException;
+import java.util.Calendar;
 
 import javax.annotation.Resource;
 
-import java.io.IOException;
-import java.util.Calendar;
+import redis.clients.jedis.Jedis;
 
 public class PublishConsumeBenchmarkTest extends BasicTest {
     @Resource(name = "jedisConnFactory")
