@@ -1,7 +1,6 @@
 package com.orangeside.dao.flyway;
 
-import com.googlecode.flyway.core.Flyway;
-
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;

@@ -349,7 +349,7 @@
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
-                <version>${flyway.verson}</version>
+                <version>${flyway.version}</version>
             </dependency>
 
 
