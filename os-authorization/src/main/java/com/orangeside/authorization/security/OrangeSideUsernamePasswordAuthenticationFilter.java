@@ -19,7 +19,6 @@ public class OrangeSideUsernamePasswordAuthenticationFilter extends AbstractAuth
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "j_username";
     public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "j_password";
 
-    public static final String SPRING_SECURITY_FORM_VCODE_KEY = "j_vcode";
     /**
      * @deprecated If you want to retain the username, cache it in a customized {@code
      * AuthenticationFailureHandler}
@@ -30,7 +29,6 @@ public class OrangeSideUsernamePasswordAuthenticationFilter extends AbstractAuth
     private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
     private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
 
-    private String vcodeParameter = SPRING_SECURITY_FORM_VCODE_KEY;
     private boolean postOnly = true;
 
     //~ Constructors ===================================================================================================

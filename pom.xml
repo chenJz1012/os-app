@@ -38,7 +38,7 @@
         <!-- spring版本号 -->
         <spring.version>4.1.2.RELEASE</spring.version>
         <!-- security版本号 -->
-        <spring.security.version>3.2.8.RELEASE</spring.security.version>
+        <spring.security.version>3.2.9.RELEASE</spring.security.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.3.0</mybatis.version>
         <!-- log4j日志文件管理包版本 -->
@@ -233,11 +233,6 @@
             </dependency>
 
             <!-- 日期工具类 -->
-            <dependency>
-                <groupId>com.darwinsys</groupId>
-                <artifactId>hirondelle-date4j</artifactId>
-                <version>1.5.1</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.aspectj</groupId>
