@@ -7,9 +7,11 @@
 <!--    http://www.qos.ch/shop/products/professionalSupport         -->
 <!--                                                                -->
 <configuration>
+
     <property name="pattern"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
     <property name="log_home" value="${catalina.base}/logs"/>
+    <property resource="config/properties/jdbc.properties"/>
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${pattern}</pattern>
@@ -54,12 +56,11 @@
 
     <appender name="db-classic-mysql-pool" class="ch.qos.logback.classic.db.DBAppender">
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
-            <dataSource
-                    class="com.alibaba.druid.pool.DruidDataSource">
-                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                <url>jdbc:mysql://localhost:3306/app?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</url>
-                <username>root</username>
-                <password>root1234</password>
+            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
+                <driverClassName>${jdbc_driverClassName}</driverClassName>
+                <url>${jdbc_url}</url>
+                <username>${jdbc_username}</username>
+                <password>${jdbc_password}</password>
             </dataSource>
         </connectionSource>
     </appender>
