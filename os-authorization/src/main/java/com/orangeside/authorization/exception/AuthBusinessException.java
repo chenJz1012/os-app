@@ -8,7 +8,7 @@ import com.orangeside.common.exception.BusinessException;
 public class AuthBusinessException extends BusinessException {
     @Override
     protected String getPropertiesPath() {
-        return "/config/properties/business_authorization.properties";
+        return "/config/properties/business_code.properties";
     }
 
     public AuthBusinessException(int errCode) {

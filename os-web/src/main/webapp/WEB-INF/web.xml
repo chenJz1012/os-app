@@ -9,7 +9,7 @@
     <!-- 读取spring配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/config/spring.xml
+        <param-value>classpath:/config/spring.xml
         </param-value>
     </context-param>
     <!-- 设计路径变量值 -->

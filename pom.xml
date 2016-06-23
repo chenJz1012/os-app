@@ -11,11 +11,11 @@
         <module>os-common</module>
         <module>os-patchca</module>
         <module>os-dao</module>
+        <module>os-redis</module>
         <module>os-authorization</module>
         <module>os-sample</module>
         <module>os-web</module>
         <module>os-test</module>
-        <module>os-redis</module>
     </modules>
     <packaging>pom</packaging>
     <developers>

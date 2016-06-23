@@ -10,7 +10,7 @@ public class SampleBusinessException extends BusinessException {
 
     @Override
     protected String getPropertiesPath() {
-        return "/config/properties/business_sample.properties";
+        return "config/properties/business_code.properties";
     }
 
     public SampleBusinessException(int errCode) {
