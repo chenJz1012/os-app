@@ -1,65 +1,105 @@
-
 DROP TABLE IF EXISTS `sys_function`;
 CREATE TABLE `sys_function` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) NOT NULL COMMENT '父ID',
-  `function_name` varchar(64) CHARACTER SET utf8mb4 NOT NULL COMMENT '功能名称',
-  `display` int(1) NOT NULL DEFAULT '1' COMMENT '是否显示到菜单栏',
-  `state` int(1) NOT NULL COMMENT '是否启用，0=不启用，1=启用',
-  `icon` varchar(32) DEFAULT NULL COMMENT 'icon',
-  `action` varchar(255) NOT NULL COMMENT '请求路径',
-  `function_desc` int(11) NOT NULL COMMENT '排序号',
-  `insert_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
-  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `id`            INT(11)               NOT NULL AUTO_INCREMENT,
+  `parent_id`     INT(11)               NOT NULL
+  COMMENT '父ID',
+  `function_name` VARCHAR(64)
+                  CHARACTER SET utf8mb4 NOT NULL
+  COMMENT '功能名称',
+  `display`       INT(1)                NOT NULL DEFAULT '1'
+  COMMENT '是否显示到菜单栏',
+  `state`         INT(1)                NOT NULL
+  COMMENT '是否启用，0=不启用，1=启用',
+  `icon`          VARCHAR(32)                    DEFAULT NULL
+  COMMENT 'icon',
+  `action`        VARCHAR(255)          NOT NULL
+  COMMENT '请求路径',
+  `function_desc` INT(11)               NOT NULL
+  COMMENT '排序号',
+  `insert_time`   TIMESTAMP             NULL     DEFAULT CURRENT_TIMESTAMP
+  COMMENT '插入时间',
+  `update_time`   TIMESTAMP             NULL     DEFAULT NULL
+  COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `action` (`action`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `role_name` varchar(64) NOT NULL COMMENT '角色名称',
-  `default_action` varchar(255) NOT NULL COMMENT '角色默认跳转function',
-  `state` int(1) NOT NULL COMMENT '是否启用，0=不启用，1=启用',
-  `insert_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
-  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `id`             INT(11)      NOT NULL AUTO_INCREMENT
+  COMMENT 'id',
+  `role_name`      VARCHAR(64)  NOT NULL
+  COMMENT '角色名称',
+  `default_action` VARCHAR(255) NOT NULL
+  COMMENT '角色默认跳转function',
+  `state`          INT(1)       NOT NULL
+  COMMENT '是否启用，0=不启用，1=启用',
+  `insert_time`    TIMESTAMP    NULL     DEFAULT CURRENT_TIMESTAMP
+  COMMENT '生成时间',
+  `update_time`    TIMESTAMP    NULL     DEFAULT NULL
+  COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `roleName` (`role_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 DROP TABLE IF EXISTS `sys_role_function`;
 CREATE TABLE `sys_role_function` (
-  `function_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `function_id` INT(11) DEFAULT NULL,
+  `role_id`     INT(11) DEFAULT NULL,
   KEY `function_id` (`function_id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login_name` varchar(64) NOT NULL COMMENT '登录名',
-  `password` varchar(64) NOT NULL COMMENT '密码',
-  `display_name` varchar(64) NOT NULL COMMENT '显示名称',
-  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态，0=冻结，1=正常',
-  `account_non_locked` tinyint(1) NOT NULL DEFAULT '1' COMMENT '未锁定状态，0=正常，1=锁定',
-  `account_non_expired` tinyint(1) NOT NULL DEFAULT '1' COMMENT '账号过期状态，1=正常，0=过期',
-  `credentials_non_expired` tinyint(1) NOT NULL DEFAULT '1' COMMENT '密码失效状态：1：未失效 0：已失效',
-  `last_login_ip` varchar(32) DEFAULT NULL COMMENT '登陆IP',
-  `last_login_time` timestamp NULL DEFAULT NULL COMMENT '最后登陆时间',
-  `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
-  `contact_phone` varchar(32) DEFAULT NULL COMMENT '电话',
-  `insert_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
-  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `id`                      INT(11)     NOT NULL AUTO_INCREMENT,
+  `login_name`              VARCHAR(64) NOT NULL
+  COMMENT '登录名',
+  `password`                VARCHAR(64) NOT NULL
+  COMMENT '密码',
+  `display_name`            VARCHAR(64) NOT NULL
+  COMMENT '显示名称',
+  `enabled`                 TINYINT(1)  NOT NULL DEFAULT '1'
+  COMMENT '状态，0=冻结，1=正常',
+  `account_non_locked`      TINYINT(1)  NOT NULL DEFAULT '1'
+  COMMENT '未锁定状态，0=正常，1=锁定',
+  `account_non_expired`     TINYINT(1)  NOT NULL DEFAULT '1'
+  COMMENT '账号过期状态，1=正常，0=过期',
+  `credentials_non_expired` TINYINT(1)  NOT NULL DEFAULT '1'
+  COMMENT '密码失效状态：1：未失效 0：已失效',
+  `last_login_ip`           VARCHAR(32)          DEFAULT NULL
+  COMMENT '登陆IP',
+  `last_login_time`         TIMESTAMP   NULL     DEFAULT NULL
+  COMMENT '最后登陆时间',
+  `email`                   VARCHAR(64)          DEFAULT NULL
+  COMMENT '邮箱',
+  `contact_phone`           VARCHAR(32)          DEFAULT NULL
+  COMMENT '电话',
+  `insert_time`             TIMESTAMP   NULL     DEFAULT CURRENT_TIMESTAMP
+  COMMENT '插入时间',
+  `update_time`             TIMESTAMP   NULL     DEFAULT NULL
+  COMMENT '更新时间',
+  `last_password_reset`     TIMESTAMP   NULL     DEFAULT NULL
+  COMMENT '上次密码重置时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_name` (`login_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
-  `user_id` int(11) DEFAULT NULL,
-  `role_id` int(11) DEFAULT NULL,
+  `user_id` INT(11) DEFAULT NULL,
+  `role_id` INT(11) DEFAULT NULL,
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 

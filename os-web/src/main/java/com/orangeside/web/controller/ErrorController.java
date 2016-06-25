@@ -1,7 +1,16 @@
 package com.orangeside.web.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+
+import static com.orangeside.common.constant.ResponsePages.ERROR_400;
+import static com.orangeside.common.constant.ResponsePages.ERROR_401;
+import static com.orangeside.common.constant.ResponsePages.ERROR_403;
+import static com.orangeside.common.constant.ResponsePages.ERROR_404;
+import static com.orangeside.common.constant.ResponsePages.ERROR_500;
 
 /**
  * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/7 说明：
@@ -9,22 +18,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/error")
 public class ErrorController {
-    private final static String ERROR_403 = "error/403";
-    private final static String ERROR_404 = "error/404";
-    private final static String ERROR_500 = "error/500";
+    @Value("${security.token.header}")
+    private String header;
 
-    @RequestMapping("/pageDenied")
-    public String pageDenied() throws Exception {
+    @RequestMapping("/403")
+    public String pageDenied(HttpServletResponse response) throws Exception {
         return ERROR_403;
     }
 
-    @RequestMapping("/pageNotFound")
-    public String pageNotFound() throws Exception {
+    @RequestMapping("/404")
+    public String pageNotFound(HttpServletResponse response) throws Exception {
         return ERROR_404;
     }
 
-    @RequestMapping("/internalServerError")
-    public String internalServerError() throws Exception {
+    @RequestMapping("/500")
+    public String internalServerError(HttpServletResponse response) throws Exception {
         return ERROR_500;
+    }
+
+    @RequestMapping("/400")
+    public String paramError(HttpServletResponse response) throws Exception {
+        return ERROR_400;
+    }
+
+    @RequestMapping("/401")
+    public String unAuthError(HttpServletResponse response) throws Exception {
+        return ERROR_401;
     }
 }

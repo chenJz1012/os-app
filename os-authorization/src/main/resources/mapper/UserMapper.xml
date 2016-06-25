@@ -20,6 +20,7 @@
         <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
         <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="last_password_reset" property="lastPasswordReset" jdbcType="TIMESTAMP"/>
     </resultMap>
     <resultMap id="UserVoMap" type="com.orangeside.authorization.vo.UserVO">
         <!--
@@ -40,6 +41,8 @@
         <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
         <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="last_password_reset" property="lastPasswordReset" jdbcType="TIMESTAMP"/>
+
     </resultMap>
     <sql id="Base_Column_List">
         <!--
@@ -48,7 +51,7 @@
         -->
         id, login_name, password, display_name, enabled, account_non_locked, account_non_expired,
         credentials_non_expired, last_login_ip, last_login_time, email, contact_phone, insert_time,
-        update_time
+        update_time,last_password_reset
     </sql>
     <select id="findUserByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

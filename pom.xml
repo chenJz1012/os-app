@@ -53,6 +53,7 @@
         <spring.data.redis.version>1.7.1.RELEASE</spring.data.redis.version>
         <jedis.version>2.7.3</jedis.version>
         <flyway.version>4.0.1</flyway.version>
+        <jjwt.version>0.6.0</jjwt.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -263,6 +264,12 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>jstl</artifactId>
                 <version>1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
 
             <!-- JSON -->

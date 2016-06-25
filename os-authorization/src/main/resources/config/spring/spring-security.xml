@@ -12,9 +12,53 @@
     <http pattern="/assets/**" security="none"/>
     <http pattern="/favicon.ico" security="none"/>
 
+    <http pattern="/api/**" use-expressions="true"
+          create-session="stateless"
+          entry-point-ref="osHttpAuthenticationEntryPoint">
+        <!-- token filter -->
+        <custom-filter ref="osHttpAuthenticationTokenFilter" position="PRE_AUTH_FILTER"/>
+
+        <intercept-url pattern="/api/auth" access="permitAll"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <!-- 加载权限拦截 -->
+        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+        <!-- 修饰头部 -->
+        <custom-filter ref="headerFilter" after="FIRST"/>
+        <!-- 权限认证失败后 -->
+        <access-denied-handler ref="osHttpAccessDeniedHandler"/>
+
+
+    </http>
+
+    <beans:bean id="headerFilter"
+                class="com.orangeside.authorization.security.http.HttpHeaderFilter"/>
+
+    <beans:bean id="tokenUtils" class="com.orangeside.authorization.utils.TokenUtils"/>
+
+    <beans:bean id="osHttpAuthenticationEntryPoint"
+                class="com.orangeside.authorization.security.http.OrangeSideHttpAuthenticationEntryPoint">
+    </beans:bean>
+
+    <beans:bean id="osHttpAuthenticationTokenFilter"
+                class="com.orangeside.authorization.security.http.OrangeSideHttpAuthenticationTokenFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="tokenUtils" ref="tokenUtils"/>
+        <beans:property name="userDetailsService" ref="orangeSideUserService"/>
+        <beans:property name="authenticationFailureHandler"
+                        ref="osHttpAuthenticationFailureHandler"/>
+    </beans:bean>
+
+    <!-- 自定义登录失败handler -->
+    <beans:bean id="osHttpAuthenticationFailureHandler"
+                class="com.orangeside.authorization.security.http.OrangeSideHttpAuthenticationFailureHandler">
+    </beans:bean>
+
+    <beans:bean id="osHttpAccessDeniedHandler"
+                class="com.orangeside.authorization.security.http.OrangeSideHttpAccessDeniedHandler"/>
+
     <http use-expressions="true" entry-point-ref="osAuthenticationEntryPoint">
-        <intercept-url pattern="/security/web/**" access="permitAll"/>
-        <intercept-url pattern="/**" access="isAuthenticated"/>
+        <intercept-url pattern="/security/**" access="permitAll"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
         <!-- session管理-->
         <session-management session-authentication-strategy-ref="sessionAuthenticationStrategy"
                             invalid-session-url="${security.login}"/>
@@ -44,6 +88,7 @@
 
     </http>
 
+
     <authentication-manager erase-credentials="false" alias="authenticationManager">
         <authentication-provider ref="authenticationProvider">
         </authentication-provider>
@@ -56,6 +101,7 @@
         <beans:property name="passwordEncoder" ref="encoder"/>
         <beans:property name="userCache" ref="orangeUserCache"/>
     </beans:bean>
+
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 

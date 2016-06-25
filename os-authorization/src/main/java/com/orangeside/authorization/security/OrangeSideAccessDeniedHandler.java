@@ -35,7 +35,7 @@ public class OrangeSideAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException, ServletException {
         if (RequestUtil.isAjax(request)) {
-            ResponseUtil.writeJson(response, false, 403, "没有权限访问!", errorPage);
+            ResponseUtil.writeJson(response, HttpServletResponse.SC_UNAUTHORIZED, "没有权限访问!", errorPage);
             return;
         }
         if (!response.isCommitted()) {

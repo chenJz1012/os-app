@@ -4,10 +4,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Table(name = "sys_user")
 public class User {
@@ -97,6 +101,12 @@ public class User {
      */
     @Column(name = "update_time")
     private Date updateTime;
+
+    /**
+     * 上次密码重置时间
+     */
+    @Column(name = "last_password_reset")
+    private Date lastPasswordReset;
 
     /**
      * @return id
@@ -344,5 +354,14 @@ public class User {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+
+    public Date getLastPasswordReset() {
+        return lastPasswordReset;
+    }
+
+    public void setLastPasswordReset(Date lastPasswordReset) {
+        this.lastPasswordReset = lastPasswordReset;
     }
 }

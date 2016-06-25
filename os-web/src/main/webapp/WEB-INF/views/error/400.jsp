@@ -33,7 +33,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title>Metronic | ERROR - 404 </title>
+    <title>Metronic | ERROR - 400</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -74,25 +74,14 @@ License: You must have a valid license purchased only from themeforest(the above
 <div class="row">
     <div class="col-md-12 page-404">
         <div class="number">
-            404
+            400
         </div>
         <div class="details">
-            <h3>Oops! You're lost.</h3>
+            <h3>Oops! 400.</h3>
             <p>
-                We can not find the page you're looking for.<br/>
                 <a href="index.html">
                     Return home </a>
-                or try the search bar below.
             </p>
-            <form action="#">
-                <div class="input-group input-medium">
-                    <input type="text" class="form-control" placeholder="keyword...">
-					<span class="input-group-btn">
-					<button type="submit" class="btn blue"><i class="fa fa-search"></i></button>
-					</span>
-                </div>
-                <!-- /input-group -->
-            </form>
         </div>
     </div>
 </div>

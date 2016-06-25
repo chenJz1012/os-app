@@ -1,15 +1,21 @@
 package com.orangeside.authorization.security;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/4 说明：
  */
 public class OrangeSideSecurityUser extends User {
+    private Integer id;
+    private String loginName;
+    private String displayName;
+    private String email;
+    private String contactPhone;
+    private Date lastPasswordReset;
     public OrangeSideSecurityUser(com.orangeside.authorization.model.User user,
                                   Collection<GrantedAuthority> userGrantedAuthorities) {
         super(user.getLoginName(), user.getPassword(), user.getEnabled(),
@@ -21,14 +27,9 @@ public class OrangeSideSecurityUser extends User {
             setDisplayName(user.getDisplayName());
             setEmail(user.getEmail());
             setContactPhone(user.getContactPhone());
+            setLastPasswordReset(user.getLastPasswordReset());
         }
     }
-
-    private Integer id;
-    private String loginName;
-    private String displayName;
-    private String email;
-    private String contactPhone;
 
     public Integer getId() {
         return id;
@@ -68,5 +69,13 @@ public class OrangeSideSecurityUser extends User {
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
+    }
+
+    public Date getLastPasswordReset() {
+        return lastPasswordReset;
+    }
+
+    public void setLastPasswordReset(Date lastPasswordReset) {
+        this.lastPasswordReset = lastPasswordReset;
     }
 }

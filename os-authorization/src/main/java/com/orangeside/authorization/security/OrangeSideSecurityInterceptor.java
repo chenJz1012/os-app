@@ -29,7 +29,7 @@ public class OrangeSideSecurityInterceptor extends AbstractSecurityInterceptor i
             ServletException {
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
-            fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+                fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         } finally {
             super.afterInvocation(token, null);
         }

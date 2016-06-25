@@ -1,13 +1,19 @@
 package com.orangeside.common.handler;
 
+import com.orangeside.common.constant.ResponsePages;
+import com.orangeside.common.utils.HttpResponseUtil;
 import com.orangeside.common.utils.RequestUtil;
 import com.orangeside.common.utils.ResponseUtil;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class ControllerExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
-    private final static String ERROR_500 = "error/500";
+    @Value("${security.token.header}")
+    private String header;
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(HttpServletResponse response, HttpServletRequest request, Exception e) {
@@ -27,10 +34,19 @@ public class ControllerExceptionHandler {
             logger.debug("异常来源请求为：{}", "ajax请求");
             ResponseUtil.error(response, e.getMessage());
         } else {
-            logger.debug("异常来源请求为：{}", "传统页面请求");
-            ModelAndView modelAndView = new ModelAndView(ERROR_500);
-            modelAndView.addObject("message", e.getMessage());
-            return modelAndView;
+            logger.debug("异常来源请求为：{}", "页面请求");
+            String header = response.getHeader(this.header);
+            if (StringUtils.isNotEmpty(header)) {
+                try {
+                    HttpResponseUtil.writeJson(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                ModelAndView modelAndView = new ModelAndView(ResponsePages.ERROR_500);
+                modelAndView.addObject("message", e.getMessage());
+                return modelAndView;
+            }
         }
         return null;
     }

@@ -3,33 +3,39 @@ package com.orangeside.common.utils;
 /**
  * Created by cgj on 2015/12/22.
  */
-public class Result<T> {
+public class HttpResult<T> {
     private int code = 0;
-    private String message = "";
+    private String token;
     private T data;
 
-    public Result() {
+    public HttpResult() {
     }
 
-    public Result(int code) {
+    public HttpResult(int code) {
         this.code = code;
     }
 
-    public Result(int code, String message) {
+    public HttpResult(int code, String token) {
         this.code = code;
-        this.message = message;
+        this.token = token;
     }
 
-    public Result(int code, T data) {
+    public HttpResult(int code, T data) {
         this.code = code;
         this.data = data;
     }
 
-    public Result(int code, String message, T data) {
-        this.code = code;
-        this.message = message;
+    public HttpResult(String token, T data) {
+        this.token = token;
         this.data = data;
     }
+
+    public HttpResult(int code, String token, T data) {
+        this.code = code;
+        this.token = token;
+        this.data = data;
+    }
+
 
     public int getCode() {
         return code;
@@ -39,12 +45,12 @@ public class Result<T> {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getToken() {
+        return token;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public T getData() {

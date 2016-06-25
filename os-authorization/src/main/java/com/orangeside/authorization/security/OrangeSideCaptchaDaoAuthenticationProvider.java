@@ -1,6 +1,8 @@
 package com.orangeside.authorization.security;
 
+import com.orangeside.authorization.security.http.OrangeSideHttpAuthenticationDetails;
 import com.orangeside.authorization.utils.SecurityUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,28 +13,35 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class OrangeSideCaptchaDaoAuthenticationProvider extends DaoAuthenticationProvider {
-    @Autowired private MessageSource messageSource;
+    @Autowired
+    private MessageSource messageSource;
 
-    @Override protected void additionalAuthenticationChecks(UserDetails userDetails,
-        UsernamePasswordAuthenticationToken token) throws AuthenticationException {
+    @Override
+    protected void additionalAuthenticationChecks(UserDetails userDetails,
+                                                  UsernamePasswordAuthenticationToken token) throws AuthenticationException {
         super.additionalAuthenticationChecks(userDetails, token);
+
         Object obj = token.getDetails();
+        if (obj instanceof OrangeSideHttpAuthenticationDetails) {
+            return;
+        }
+
         if (!(obj instanceof OrangeSideCaptchaAuthenticationDetails)) {
             throw new InsufficientAuthenticationException(messageSource
-                .getMessage("AbstractUserDetailsAuthenticationProvider.captchaNotFound", null,
-                    null));
+                    .getMessage("AbstractUserDetailsAuthenticationProvider.captchaNotFound", null,
+                            null));
         }
 
         OrangeSideCaptchaAuthenticationDetails captchaDetails =
-            (OrangeSideCaptchaAuthenticationDetails) obj;
+                (OrangeSideCaptchaAuthenticationDetails) obj;
         String captcha = captchaDetails.getCaptcha();
         if (captcha != null) {
             String expected = captcha;
             String actual = captchaDetails.getAnswer();
             if (!SecurityUtils.matchString(actual, expected)) {
                 throw new BadCredentialsException(messageSource
-                    .getMessage("AbstractUserDetailsAuthenticationProvider.captchaNotMatch", null,
-                        null));
+                        .getMessage("AbstractUserDetailsAuthenticationProvider.captchaNotMatch", null,
+                                null));
             }
         }
     }

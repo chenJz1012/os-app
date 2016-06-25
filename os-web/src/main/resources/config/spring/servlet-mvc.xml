@@ -10,6 +10,8 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <context:property-placeholder location="classpath:config/properties/security.properties"/>
+
     <!-- 开启注解 -->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -25,7 +27,8 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <context:component-scan base-package="com.orangeside.*.handler,com.orangeside.*.controller"/>
+    <context:component-scan
+            base-package="com.orangeside.*.handler,com.orangeside.*.controller,com.orangeside.*.controller.rest"/>
     <!-- 静态资源(js/image)的访问 -->
     <mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
     <mvc:resources location="/assets/" mapping="/assets/**"/>

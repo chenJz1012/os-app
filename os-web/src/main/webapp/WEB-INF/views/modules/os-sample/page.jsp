@@ -25,7 +25,7 @@
                 data: {},
                 dataType: "json",
                 success: function (data) {
-                    if (data.success == false) {
+                    if (data.code > 200) {
                         alert(data.message);
                     }
                 },
@@ -45,7 +45,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    if (data.success) {
+                    if (data.code == 200) {
                         alert(data.message);
                         window.location.href = data.targetUrl;
                     } else {
@@ -63,7 +63,7 @@
                 url: "<%=basePath%>/security/logout",
                 dataType: "json",
                 success: function (data) {
-                    if (data.success) {
+                    if (data.code == 200) {
                         alert(data.message);
                         window.location.href = data.targetUrl;
                     }
@@ -79,7 +79,7 @@
                 url: "<%=basePath%>/index",
                 dataType: "json",
                 success: function (data) {
-                    if (!data.success) {
+                    if (!data.code == 200) {
                         alert(data.message);
                     }
                 },
@@ -95,7 +95,7 @@
                 url: "<%=basePath%>/security/web/onlineUser",
                 dataType: "json",
                 success: function (data) {
-                    if (data.success == false) {
+                    if (data.code > 200) {
                         alert(data.message);
                         return;
                     }

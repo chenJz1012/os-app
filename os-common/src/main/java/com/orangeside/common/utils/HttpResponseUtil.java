@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 工程：os-app 创建人 : ChenGJ 创建时间： 2015/9/6 说明：
  */
-public class ResponseUtil {
+public class HttpResponseUtil {
 
     public static void writeJson(HttpServletResponse response, Object o) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -24,32 +24,36 @@ public class ResponseUtil {
     }
 
     public static void writeJson(HttpServletResponse response, Integer code,
-                                 String message, String targetUrl) throws IOException {
-        writeJson(response, new Result(code, message, targetUrl));
+                                 String message) throws IOException {
+        writeJson(response, new HttpResult(code, message));
     }
 
-    public static Result success() {
-        return new Result(HttpServletResponse.SC_OK);
+    public static HttpResult success() {
+        return new HttpResult(HttpServletResponse.SC_OK);
     }
 
-    public static Result success(String msg) {
-        return new Result(HttpServletResponse.SC_OK, msg);
+    public static HttpResult success(String token) {
+        return new HttpResult(HttpServletResponse.SC_OK, token);
     }
 
-    public static <T> Result success(T data) {
-        return new Result(HttpServletResponse.SC_OK, data);
+    public static Result data(String massage) {
+        return new Result(HttpServletResponse.SC_OK, massage);
+    }
+
+    public static <T> HttpResult success(T data) {
+        return new HttpResult(HttpServletResponse.SC_OK, data);
     }
 
     public static Result error() {
         return new Result(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
-    public static Result error(String msg) {
-        return new Result(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, msg);
+    public static Result error(String message) {
+        return new Result(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
     }
 
-    public static Result error(int code, String msg) {
-        return new Result(code, msg);
+    public static Result error(int code, String message) {
+        return new Result(code, message);
     }
 
     public static Result error(BindingResult result) {
@@ -64,6 +68,14 @@ public class ResponseUtil {
     public static void error(HttpServletResponse response, String message) {
         try {
             writeJson(response, error(message));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void error(HttpServletResponse response, int code, String message) {
+        try {
+            writeJson(response, error(code, message));
         } catch (IOException e) {
             e.printStackTrace();
         }
