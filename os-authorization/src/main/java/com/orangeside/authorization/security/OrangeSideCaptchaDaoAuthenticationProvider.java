@@ -44,6 +44,7 @@ public class OrangeSideCaptchaDaoAuthenticationProvider extends DaoAuthenticatio
                                 null));
             }
         }
+        token.setDetails(null);
     }
 
 }

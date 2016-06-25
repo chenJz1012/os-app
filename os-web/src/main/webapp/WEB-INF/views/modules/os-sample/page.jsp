@@ -79,7 +79,7 @@
                 url: "<%=basePath%>/index",
                 dataType: "json",
                 success: function (data) {
-                    if (!data.code == 200) {
+                    if (data.code > 200) {
                         alert(data.message);
                     }
                 },
